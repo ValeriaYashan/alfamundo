@@ -25,6 +25,10 @@ body{font-family:Arial,sans-serif;background:#FFF8EE;color:#1F2D3D;font-size:16p
 .step-num{width:32px;height:32px;border-radius:50%;background:#3B1A08;color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .step-title{font-size:18px;font-weight:700;color:#3B1A08}
 .step-sub{font-size:12px;color:#7B5A3A;margin-top:2px}
+.loading-box{text-align:center;padding:40px 20px}
+.loading-box .spin{width:36px;height:36px;border:3px solid #E0C9A6;border-top-color:#C9972A;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-box p{color:#7B5A3A;font-size:14px}
 .cart-bar{background:#3B1A08;border-radius:10px;padding:12px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:10}
 .cart-info{color:#C9972A;font-size:12px;line-height:1.5}
 .cart-info span{color:#fff;font-weight:700}
@@ -33,29 +37,27 @@ body{font-family:Arial,sans-serif;background:#FFF8EE;color:#1F2D3D;font-size:16p
 .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .prod-card{border:1.5px solid #E0C9A6;border-radius:12px;background:#fff;overflow:hidden;-webkit-tap-highlight-color:transparent}
 .prod-card.sel{border:2.5px solid #C9972A}
-.prod-img{width:100%;aspect-ratio:1;object-fit:cover;background:#F5EDD8;display:flex;align-items:center;justify-content:center;font-size:36px;color:#C9972A;position:relative}
-.prod-img img{width:100%;height:100%;object-fit:cover;display:block}
-.prod-img-placeholder{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#F5EDD8 0%,#E8D5B7 100%);display:flex;align-items:center;justify-content:center;font-size:32px}
+.prod-img-placeholder{width:100%;aspect-ratio:1;background:#F5EDD8;display:flex;align-items:center;justify-content:center;font-size:32px}
+.prod-img-wrap{width:100%;aspect-ratio:1;overflow:hidden;background:#F5EDD8}
+.prod-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .prod-top{padding:10px 10px 6px;cursor:pointer;position:relative}
 .prod-check{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:#E0C9A6;display:flex;align-items:center;justify-content:center}
 .prod-card.sel .prod-check{background:#C9972A}
 .prod-check svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.5}
 .prod-badge{font-size:9px;border-radius:3px;padding:2px 6px;font-weight:700;display:inline-block;margin-bottom:4px;line-height:1.3}
-.b-p{background:#F5C842;color:#3B1A08}
-.b-m{background:#FAEEDA;color:#633806}
-.b-pr{background:#EEEDFE;color:#3C3489}
-.b-s{background:#E1F5EE;color:#085041}
+.b-p{background:#F5C842;color:#3B1A08}.b-m{background:#FAEEDA;color:#633806}
+.b-pr{background:#EEEDFE;color:#3C3489}.b-s{background:#E1F5EE;color:#085041}
 .prod-name{font-size:12px;font-weight:700;color:#3B1A08;line-height:1.3;margin-bottom:3px;padding-right:26px}
 .prod-desc{font-size:10px;color:#7B5A3A;line-height:1.4;margin-bottom:6px}
 .prod-price{font-size:15px;font-weight:700;color:#854F0B}
 .qty-row{background:#FFF8EE;border-top:1px solid #E0C9A6;padding:8px 10px;display:flex;align-items:center;gap:10px}
-.qty-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid #E0C9A6;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#3B1A08;font-weight:700;line-height:1;-webkit-tap-highlight-color:transparent}
+.qty-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid #E0C9A6;background:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#3B1A08;font-weight:700;-webkit-tap-highlight-color:transparent}
 .qty-btn:active{background:#E0C9A6}
 .qty-val{font-size:16px;font-weight:700;min-width:26px;text-align:center;color:#3B1A08}
 .qty-sub{font-size:11px;color:#7B5A3A;flex:1;text-align:right}
 .pack-grid,.del-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:16px}
 .pack-opt,.del-opt{border:1.5px solid #E0C9A6;border-radius:12px;padding:14px 16px;cursor:pointer;background:#fff;display:flex;justify-content:space-between;align-items:center;-webkit-tap-highlight-color:transparent}
-.pack-opt:active,.del-opt:active,.pack-opt.sel,.del-opt.sel{border:2.5px solid #C9972A;background:#FFF8EE}
+.pack-opt.sel,.del-opt.sel{border:2.5px solid #C9972A;background:#FFF8EE}
 .pack-name,.del-name{font-size:14px;font-weight:700;color:#3B1A08}
 .pack-desc{font-size:11px;color:#7B5A3A;margin-top:3px}
 .pack-price,.del-price{font-size:15px;font-weight:700;color:#854F0B;flex-shrink:0;margin-left:10px}
@@ -66,16 +68,16 @@ body{font-family:Arial,sans-serif;background:#FFF8EE;color:#1F2D3D;font-size:16p
 .flabel{font-size:13px;font-weight:700;color:#7B5A3A;margin-bottom:6px;display:block}
 .flabel span{color:#C62828}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid #E0C9A6;border-radius:10px;background:#fff;color:#1F2D3D;font-size:15px;font-family:Arial,sans-serif;-webkit-appearance:none;-webkit-tap-highlight-color:transparent}
+input,select,textarea{width:100%;padding:12px 14px;border:1.5px solid #E0C9A6;border-radius:10px;background:#fff;color:#1F2D3D;font-size:15px;font-family:Arial,sans-serif;-webkit-appearance:none}
 input:focus,select:focus,textarea:focus{outline:none;border-color:#C9972A}
 textarea{resize:vertical;min-height:72px}
 .nav-btns{display:flex;gap:10px;margin-top:20px}
-.btn-back{flex:1;padding:15px;border:1.5px solid #E0C9A6;border-radius:12px;background:#fff;cursor:pointer;font-size:15px;color:#7B5A3A;font-weight:700;-webkit-tap-highlight-color:transparent}
-.btn-next{flex:2;padding:15px;border:none;border-radius:12px;background:#3B1A08;color:#fff;cursor:pointer;font-size:15px;font-weight:700;-webkit-tap-highlight-color:transparent}
+.btn-back{flex:1;padding:15px;border:1.5px solid #E0C9A6;border-radius:12px;background:#fff;cursor:pointer;font-size:15px;color:#7B5A3A;font-weight:700}
+.btn-next{flex:2;padding:15px;border:none;border-radius:12px;background:#3B1A08;color:#fff;cursor:pointer;font-size:15px;font-weight:700}
 .btn-next:disabled{background:#C9A98A;cursor:not-allowed}
 .btn-next:not(:disabled):active{background:#5D3A1A}
 .confirm-card{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:16px;margin-bottom:14px}
-.confirm-title{font-size:11px;font-weight:700;color:#7B5A3A;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #E0C9A6;letter-spacing:0.5px;text-transform:uppercase}
+.confirm-title{font-size:11px;font-weight:700;color:#7B5A3A;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #E0C9A6;letter-spacing:.5px;text-transform:uppercase}
 .confirm-row{display:flex;justify-content:space-between;align-items:flex-start;padding:6px 0;border-bottom:1px solid #F5EDD8;font-size:14px}
 .confirm-row:last-child{border-bottom:none}
 .cr-label{color:#7B5A3A;flex:1;padding-right:8px}
@@ -83,48 +85,45 @@ textarea{resize:vertical;min-height:72px}
 .wa-box{background:#ECF9E5;border:1px solid #A8D887;border-radius:12px;padding:16px;margin-bottom:14px}
 .wa-title{font-size:13px;font-weight:700;color:#2D6A1A;margin-bottom:8px}
 .wa-msg{font-size:12px;line-height:1.7;white-space:pre-wrap;color:#1A3D10;max-height:200px;overflow-y:auto;font-family:Arial,sans-serif}
-.wa-copy{width:100%;padding:15px;border:none;border-radius:12px;background:#25D366;color:#fff;cursor:pointer;font-size:16px;font-weight:700;margin-bottom:10px;-webkit-tap-highlight-color:transparent}
-.wa-copy:active{background:#1DA851}
-.wa-copy.ok{background:#2E7D32}
-.email-status{text-align:center;font-size:13px;padding:10px;border-radius:8px;margin-bottom:10px;display:none}
-.email-ok{background:#E8F5E9;color:#2E7D32;border:1px solid #A8D887}
-.email-err{background:#FFEBEE;color:#C62828;border:1px solid #FFCDD2}
+.wa-copy{width:100%;padding:15px;border:none;border-radius:12px;background:#25D366;color:#fff;cursor:pointer;font-size:16px;font-weight:700;margin-bottom:10px}
+.wa-copy:active{background:#1DA851}.wa-copy.ok{background:#2E7D32}
+.status-box{text-align:center;font-size:13px;padding:10px;border-radius:8px;margin-bottom:10px;display:none}
+.status-ok{background:#E8F5E9;color:#2E7D32;border:1px solid #A8D887}
+.status-err{background:#FFEBEE;color:#C62828;border:1px solid #FFCDD2}
 .instruc{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#7B5A3A;line-height:1.8}
 .instruc strong{color:#3B1A08}
-/* SEMANA */
 .week-banner{background:#3B1A08;border-radius:12px;padding:16px;margin-bottom:16px}
 .week-info{color:#fff;font-size:16px;font-weight:700}
 .week-sub{color:#C9972A;font-size:12px;margin-top:4px}
 .week-badge{display:inline-block;background:#F5C842;color:#3B1A08;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:8px}
-/* PEDIDOS RECIBIDOS */
 .pedido-card{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:14px;margin-bottom:10px}
 .pedido-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .pedido-nombre{font-size:14px;font-weight:700;color:#3B1A08}
 .pedido-fecha{font-size:11px;color:#7B5A3A}
 .pedido-total{font-size:16px;font-weight:700;color:#854F0B}
 .pedido-detalle{font-size:12px;color:#7B5A3A;line-height:1.6;margin-bottom:8px}
-.pedido-estado{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.st-pendiente{background:#FFF3CD;color:#856404}
-.st-confirmado{background:#E8F5E9;color:#2E7D32}
-.st-entregado{background:#E3F2FD;color:#1565C0}
-.no-pedidos{text-align:center;padding:30px 20px;color:#7B5A3A;font-size:14px}
-/* ADMIN */
+.pedido-estado{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;cursor:pointer}
+.st-p{background:#FFF3CD;color:#856404}
+.st-c{background:#E8F5E9;color:#2E7D32}
+.st-e{background:#E3F2FD;color:#1565C0}
+.no-items{text-align:center;padding:30px 20px;color:#7B5A3A;font-size:14px}
 .admin-overlay{display:none;position:fixed;inset:0;background:#1A0A00;z-index:100;overflow-y:auto;padding:16px}
 .admin-section{background:#2C1308;border:1px solid #5D3A1A;border-radius:12px;padding:16px;margin-bottom:14px}
 .admin-section h3{font-size:15px;font-weight:700;color:#F5C842;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #5D3A1A}
 .admin-row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:10px}
-.admin-row input,.admin-row select{background:#3B1A08;border-color:#5D3A1A;color:#FFF8EE;flex:1;min-width:120px;font-size:14px}
-.btn-add{padding:11px 16px;border:none;border-radius:8px;background:#C9972A;color:#3B1A08;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.admin-row input,.admin-row select{background:#3B1A08;border-color:#5D3A1A;color:#FFF8EE;flex:1;min-width:100px;font-size:14px}
+.btn-add{padding:11px 14px;border:none;border-radius:8px;background:#C9972A;color:#3B1A08;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
 .btn-add:active{background:#A07820}
 .admin-item{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#3B1A08;border-radius:8px;margin-bottom:6px;font-size:13px;flex-wrap:wrap}
-.admin-item-name{flex:1;font-weight:700;color:#FFF8EE;min-width:100px}
-.admin-item-cat{color:#C9A98A;font-size:12px}
-.admin-item-price{color:#F5C842;font-weight:700}
-.btn-del{padding:5px 12px;border:1px solid #5D3A1A;border-radius:6px;background:transparent;color:#F09595;font-size:12px;cursor:pointer}
-.btn-save{width:100%;padding:15px;border:none;border-radius:12px;background:#C9972A;color:#3B1A08;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px;-webkit-tap-highlight-color:transparent}
-.btn-save:active{background:#A07820}
-.save-ok{color:#F5C842;font-size:13px;font-weight:700;text-align:center;margin-top:10px;display:none}
+.admin-item-name{flex:1;font-weight:700;color:#FFF8EE;min-width:80px}
+.admin-item-cat{color:#C9A98A;font-size:11px}
+.admin-item-price{color:#F5C842;font-weight:700;font-size:12px}
+.btn-del{padding:4px 10px;border:1px solid #5D3A1A;border-radius:6px;background:transparent;color:#F09595;font-size:12px;cursor:pointer}
+.btn-save{width:100%;padding:15px;border:none;border-radius:12px;background:#C9972A;color:#3B1A08;font-size:16px;font-weight:700;cursor:pointer;margin-top:6px}
+.btn-save:disabled{background:#7B5A3A;cursor:not-allowed}
+.btn-save:not(:disabled):active{background:#A07820}
 .admin-flabel{font-size:12px;font-weight:700;color:#C9A98A;margin-bottom:5px;display:block}
+.sync-status{text-align:center;font-size:13px;color:#F5C842;margin-top:10px;display:none}
 .footer{text-align:center;padding:24px;font-size:11px;color:#C9A98A}
 </style>
 </head>
@@ -155,36 +154,33 @@ textarea{resize:vertical;min-height:72px}
     <div class="pr-dot" id="pr2"></div>
     <div class="pr-dot" id="pr3"></div>
   </div>
-
   <div class="step on" id="s0">
     <div class="step-hdr">
       <div class="step-num">1</div>
-      <div>
-        <div class="step-title">Elegí tus alfajores</div>
-        <div class="step-sub" id="s0-sub">Mínimo 6 unidades. Podés combinar como quieras.</div>
-      </div>
+      <div><div class="step-title">Elegí tus alfajores</div>
+      <div class="step-sub">Mínimo 6 unidades. Podés combinar como quieras.</div></div>
     </div>
     <div class="cart-bar">
       <div>
         <div class="cart-info">Unidades: <span id="cart-u">0</span> / mín. 6</div>
-        <div class="cart-info" id="cart-marcas-txt"></div>
+        <div class="cart-info" id="cart-txt"></div>
       </div>
       <div class="cart-total" id="cart-sub">$0</div>
     </div>
     <div class="min-warn" id="min-warn">Necesitás al menos 6 unidades para continuar.</div>
-    <div class="prod-grid" id="prod-grid"></div>
+    <div id="prod-loading" class="loading-box">
+      <div class="spin"></div><p>Cargando alfajores disponibles...</p>
+    </div>
+    <div class="prod-grid" id="prod-grid" style="display:none"></div>
     <div class="nav-btns">
       <button class="btn-next" id="btn-s0" onclick="goStep(1)" disabled>Elegir packaging &#8594;</button>
     </div>
   </div>
-
   <div class="step" id="s1">
     <div class="step-hdr">
       <div class="step-num">2</div>
-      <div>
-        <div class="step-title">Packaging</div>
-        <div class="step-sub">¿Cómo va presentada tu caja?</div>
-      </div>
+      <div><div class="step-title">Packaging</div>
+      <div class="step-sub">¿Cómo va presentada tu caja?</div></div>
     </div>
     <div class="pack-grid" id="pack-grid"></div>
     <div class="total-box" id="total-s1"></div>
@@ -193,14 +189,11 @@ textarea{resize:vertical;min-height:72px}
       <button class="btn-next" id="btn-s1" onclick="goStep(2)" disabled>Mis datos &#8594;</button>
     </div>
   </div>
-
   <div class="step" id="s2">
     <div class="step-hdr">
       <div class="step-num">3</div>
-      <div>
-        <div class="step-title">Tus datos y entrega</div>
-        <div class="step-sub">Completá para confirmar tu pedido</div>
-      </div>
+      <div><div class="step-title">Tus datos y entrega</div>
+      <div class="step-sub">Completá para confirmar tu pedido</div></div>
     </div>
     <div class="form-row">
       <div class="form-group">
@@ -222,7 +215,7 @@ textarea{resize:vertical;min-height:72px}
     </div>
     <div class="form-group" id="addr-group" style="display:none">
       <label class="flabel">Dirección de entrega</label>
-      <input type="text" id="f-dir" placeholder="Calle, número, localidad" autocomplete="street-address">
+      <input type="text" id="f-dir" placeholder="Calle, número, localidad">
     </div>
     <div class="form-group">
       <label class="flabel">Fecha deseada <span>*</span></label>
@@ -253,24 +246,21 @@ textarea{resize:vertical;min-height:72px}
       <button class="btn-next" id="btn-s2" onclick="goStep(3)" disabled>Ver resumen &#8594;</button>
     </div>
   </div>
-
   <div class="step" id="s3">
     <div class="step-hdr">
       <div class="step-num">4</div>
-      <div>
-        <div class="step-title">Confirmá tu pedido</div>
-        <div class="step-sub">Revisá y envianos el pedido por WhatsApp</div>
-      </div>
+      <div><div class="step-title">Confirmá tu pedido</div>
+      <div class="step-sub">Revisá y envianos el pedido por WhatsApp</div></div>
     </div>
     <div class="confirm-card" id="confirm-prods"></div>
     <div class="confirm-card" id="confirm-datos"></div>
-    <div class="email-status" id="email-status"></div>
+    <div class="status-box" id="status-box"></div>
     <div class="instruc">
       <strong>Cómo confirmar:</strong><br>
       1. Tocá el botón verde — copia el mensaje y abre WhatsApp<br>
       2. Pegá el mensaje y envialo<br>
-      3. También te llega una copia a tu email si lo ingresaste<br>
-      4. Te confirmamos disponibilidad y datos de pago
+      3. También recibís copia por email si lo ingresaste<br>
+      4. Te confirmamos y te pasamos los datos de pago
     </div>
     <div class="wa-box">
       <div class="wa-title">&#128172; Mensaje listo para WhatsApp</div>
@@ -283,18 +273,23 @@ textarea{resize:vertical;min-height:72px}
   </div>
 </div>
 
-<!-- ══ ESTA SEMANA ══ -->
+<!-- ══ SEMANA ══ -->
 <div class="panel" id="tab-semana">
   <div class="week-banner">
     <div class="week-info" id="wk-name">Cargando...</div>
     <div class="week-sub" id="wk-theme"></div>
     <div class="week-badge" id="wk-badge"></div>
   </div>
-  <div class="prod-grid" id="week-prods"></div>
-  <p style="font-size:12px;color:#7B5A3A;text-align:center;margin-top:4px">Mínimo 6 unidades — Armá tu pedido en la primera solapa</p>
+  <div id="semana-loading" class="loading-box">
+    <div class="spin"></div><p>Cargando productos de la semana...</p>
+  </div>
+  <div class="prod-grid" id="week-prods" style="display:none"></div>
+  <p style="font-size:12px;color:#7B5A3A;text-align:center;margin-top:4px">
+    Mínimo 6 unidades — Armá tu pedido en la primera solapa
+  </p>
 </div>
 
-<!-- ══ PEDIDOS RECIBIDOS ══ -->
+<!-- ══ PEDIDOS ══ -->
 <div class="panel" id="tab-recibidos">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
     <div>
@@ -310,141 +305,141 @@ textarea{resize:vertical;min-height:72px}
 <div class="admin-overlay" id="admin-overlay">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
     <div style="color:#F5C842;font-size:18px;font-weight:700">&#9881; Administración</div>
-    <button onclick="toggleAdmin()" style="padding:8px 16px;border:1.5px solid #C9972A;border-radius:8px;background:transparent;color:#C9972A;font-size:13px;font-weight:700;cursor:pointer">Cerrar</button>
+    <button onclick="toggleAdmin()" style="padding:8px 14px;border:1.5px solid #C9972A;border-radius:8px;background:transparent;color:#C9972A;font-size:13px;font-weight:700;cursor:pointer">Cerrar</button>
   </div>
-
-  <div class="admin-section">
-    <h3>&#128197; Semana actual</h3>
-    <div class="form-group"><label class="admin-flabel">Nombre de la semana</label>
-      <input type="text" id="a-wname" placeholder="Semana 3 — Artesanales GBA"></div>
-    <div class="form-group"><label class="admin-flabel">Tema / descripción</label>
-      <input type="text" id="a-wtheme" placeholder="Los premiados del CMA"></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div class="form-group"><label class="admin-flabel">Fecha de entrega</label>
-        <input type="text" id="a-wdate" placeholder="Jueves 22 de mayo"></div>
-      <div class="form-group"><label class="admin-flabel">Badge / etiqueta</label>
-        <input type="text" id="a-wbadge" placeholder="Edición CMA"></div>
-    </div>
+  <div id="admin-loading" class="loading-box" style="background:#2C1308;border-radius:12px">
+    <div class="spin"></div>
+    <p style="color:#C9A98A">Cargando configuración desde Google Sheets...</p>
   </div>
-
-  <div class="admin-section">
-    <h3>&#127863; Alfajores disponibles esta semana</h3>
-    <div class="admin-row">
-      <input type="text" id="a-pname" placeholder="Nombre del alfajor" style="min-width:140px">
-      <select id="a-pcat" style="min-width:110px">
-        <option value="premiado">Premiado CMA</option>
-        <option value="masivo">Masivo</option>
-        <option value="premium">Premium</option>
-        <option value="saludable">Sin TACC</option>
-      </select>
+  <div id="admin-content" style="display:none">
+    <div class="admin-section">
+      <h3>&#128197; Semana actual</h3>
+      <div class="form-group"><label class="admin-flabel">Nombre de la semana</label>
+        <input type="text" id="a-wname" placeholder="Semana 3 — Artesanales GBA"></div>
+      <div class="form-group"><label class="admin-flabel">Tema / descripción</label>
+        <input type="text" id="a-wtheme" placeholder="Los premiados del CMA"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div class="form-group"><label class="admin-flabel">Fecha de entrega</label>
+          <input type="text" id="a-wdate" placeholder="Jueves 22 de mayo"></div>
+        <div class="form-group"><label class="admin-flabel">Badge / etiqueta</label>
+          <input type="text" id="a-wbadge" placeholder="Edición CMA"></div>
+      </div>
     </div>
-    <div class="admin-row">
-      <input type="text" id="a-pdesc" placeholder="Descripción breve">
-      <input type="number" id="a-pprice" placeholder="Precio ARS" min="1" style="max-width:120px">
-      <input type="text" id="a-pimg" placeholder="URL foto (opcional)" style="min-width:140px">
+    <div class="admin-section">
+      <h3>&#127863; Alfajores esta semana</h3>
+      <div class="admin-row">
+        <input type="text" id="a-pname" placeholder="Nombre del alfajor">
+        <select id="a-pcat">
+          <option value="premiado">Premiado CMA</option>
+          <option value="masivo">Masivo</option>
+          <option value="premium">Premium</option>
+          <option value="saludable">Sin TACC</option>
+        </select>
+      </div>
+      <div class="admin-row">
+        <input type="text" id="a-pdesc" placeholder="Descripción breve">
+        <input type="number" id="a-pprice" placeholder="Precio ARS" min="1" style="max-width:120px">
+        <input type="text" id="a-pimg" placeholder="URL foto (opcional)">
+      </div>
+      <button class="btn-add" onclick="addProd()" style="width:100%;margin-bottom:10px">+ Agregar alfajor</button>
+      <div id="a-prod-list"></div>
     </div>
-    <button class="btn-add" onclick="addProd()" style="width:100%;margin-bottom:10px">+ Agregar alfajor</button>
-    <div id="a-prod-list"></div>
+    <div class="admin-section">
+      <h3>&#127873; Packaging</h3>
+      <div id="a-pack-list"></div>
+      <div class="admin-row" style="margin-top:10px">
+        <input type="text" id="a-pkname" placeholder="Nombre">
+        <input type="text" id="a-pkdesc" placeholder="Descripción">
+        <input type="number" id="a-pkprice" placeholder="Precio" min="0" style="max-width:100px">
+        <button class="btn-add" onclick="addPack()">+</button>
+      </div>
+    </div>
+    <div class="admin-section">
+      <h3>&#128667; Entrega</h3>
+      <div id="a-del-list"></div>
+      <div class="admin-row" style="margin-top:10px">
+        <input type="text" id="a-dname" placeholder="Nombre de entrega">
+        <input type="number" id="a-dprice" placeholder="Costo ARS" min="0" style="max-width:110px">
+        <button class="btn-add" onclick="addDel()">+</button>
+      </div>
+    </div>
+    <div class="admin-section">
+      <h3>&#128197; Fechas disponibles</h3>
+      <div id="a-fecha-list"></div>
+      <div class="admin-row" style="margin-top:10px">
+        <input type="text" id="a-fnew" placeholder="Ej: Jueves 29 de mayo">
+        <button class="btn-add" onclick="addFecha()">+</button>
+      </div>
+    </div>
+    <div class="admin-section">
+      <h3>&#128222; WhatsApp del negocio</h3>
+      <div class="admin-row">
+        <input type="tel" id="a-wanum" placeholder="5491123456789">
+      </div>
+      <div style="font-size:11px;color:#C9A98A;margin-top:4px">Formato: 54 + 9 + cód. sin 0 + número sin 15</div>
+    </div>
+    <button class="btn-save" id="btn-save" onclick="saveConfig()">&#10003; Guardar en Google Sheets</button>
+    <div class="sync-status" id="sync-status"></div>
   </div>
-
-  <div class="admin-section">
-    <h3>&#127873; Opciones de packaging</h3>
-    <div id="a-pack-list"></div>
-    <div class="admin-row" style="margin-top:10px">
-      <input type="text" id="a-pkname" placeholder="Nombre packaging">
-      <input type="text" id="a-pkdesc" placeholder="Descripción">
-      <input type="number" id="a-pkprice" placeholder="Precio extra" min="0" style="max-width:110px">
-      <button class="btn-add" onclick="addPack()">+</button>
-    </div>
-  </div>
-
-  <div class="admin-section">
-    <h3>&#128667; Opciones de entrega</h3>
-    <div id="a-del-list"></div>
-    <div class="admin-row" style="margin-top:10px">
-      <input type="text" id="a-dname" placeholder="Nombre de entrega">
-      <input type="number" id="a-dprice" placeholder="Costo ARS" min="0" style="max-width:110px">
-      <button class="btn-add" onclick="addDel()">+</button>
-    </div>
-  </div>
-
-  <div class="admin-section">
-    <h3>&#128197; Fechas disponibles</h3>
-    <div id="a-fecha-list"></div>
-    <div class="admin-row" style="margin-top:10px">
-      <input type="text" id="a-fnew" placeholder="Ej: Jueves 29 de mayo">
-      <button class="btn-add" onclick="addFecha()">+</button>
-    </div>
-  </div>
-
-  <div class="admin-section">
-    <h3>&#128222; Número WhatsApp del negocio</h3>
-    <div class="admin-row">
-      <input type="tel" id="a-wanum" placeholder="5491123456789">
-    </div>
-    <div style="font-size:11px;color:#C9A98A;margin-top:4px">Formato: 54 + 9 + código sin 0 + número sin 15. Ej: 5491123456789</div>
-  </div>
-
-  <button class="btn-save" onclick="saveConfig()">&#10003; Guardar y aplicar</button>
-  <div class="save-ok" id="save-ok">&#10003; Configuración guardada</div>
 </div>
 
 <div class="footer">AlfaMundo &mdash; San Fernando, Buenos Aires &mdash; El mejor alfajor del mundo</div>
 
 <script>
-const KEY='alfamundo_v2';
-const FORMSPREE='https://formspree.io/f/xaqvqazk';
-const PEDIDOS_KEY='alfamundo_pedidos';
+const SCRIPT = 'https://script.google.com/macros/s/AKfycbw5NdMM4KsWHQ1B5pemb-Bid2JhILZwLLBuodT-Je5RaJOAzkJm0bbkWGMBevUCNQS2/exec';
+const FORMSPREE = 'https://formspree.io/f/xaqvqazk';
+const PEDIDOS_KEY = 'alfamundo_pedidos';
+const WA_KEY = 'alfamundo_wa';
 
-const defaultCfg={
-  week:{name:"Semana 1 — Los clásicos de Argentina",theme:"El mejor mix masivo y premium",date:"Jueves 8 de mayo",badge:"Lanzamiento especial"},
-  waNumber:"5491100000000",
-  products:[
-    {id:"g1",name:"Guaymallén Negro",cat:"masivo",desc:"#1 Argentina. Maicena + DDL + choc. negro",price:700,img:""},
-    {id:"g2",name:"Guaymallén Triple",cat:"masivo",desc:"El triple más vendido del país",price:1100,img:""},
-    {id:"rs",name:"Rasta Negro",cat:"masivo",desc:"#3 Argentina. Galleta crocante y DDL",price:2200,img:""},
-    {id:"jg",name:"Jorgito",cat:"masivo",desc:"El sabor de la infancia argentina",price:2400,img:""},
-    {id:"fn",name:"Fantoche",cat:"masivo",desc:"#2 Argentina. Maicena + DDL",price:1700,img:""},
-    {id:"cf",name:"Cachafaz",cat:"premium",desc:"El referente premium masivo",price:4500,img:""},
-    {id:"hv",name:"Havanna Clásico",cat:"premium",desc:"El icónico de Mar del Plata",price:6500,img:""},
-    {id:"sr",name:"Sr. Alfajor",cat:"premiado",desc:"Campeón Mundial 2024. Choc. 70% + frambuesas",price:5500,img:""},
-    {id:"ch",name:"Chacra Los Retamos",cat:"premiado",desc:"Campeón Mundial 2025. Nuez + DDL + choc. blanco",price:6500,img:""},
-    {id:"or",name:"Orense",cat:"premiado",desc:"Campeón Argentino 2025. Choc. 70% + DDL",price:3200,img:""},
-    {id:"ce",name:"Celisano",cat:"saludable",desc:"Sin gluten, sin lactosa. Oro Pyme CMA 2025",price:5800,img:""},
-    {id:"gn",name:"Guenoa",cat:"saludable",desc:"Sin azúcar, libre de gluten. Oro Saludable CMA 2024",price:5500,img:""},
-  ],
-  packaging:[
-    {id:"p1",name:"Bolsa kraft",desc:"Bolsa + papel de seda + sticker AlfaMundo",price:0},
-    {id:"p2",name:"Caja kraft premium",desc:"Caja + tissue + tarjeta + lazo",price:1500},
-    {id:"p3",name:"Caja negra gourmet",desc:"Caja negra + papel dorado + tarjeta coleccionable",price:3000},
-    {id:"p4",name:"Caja madera corporativa",desc:"Caja madera + tarjeta empresa personalizada",price:7000},
-  ],
-  delivery:[
-    {id:"d1",name:"Retiro en San Fernando Centro",price:0},
-    {id:"d2",name:"Delivery zona norte GBA",price:2500},
-    {id:"d3",name:"PedidosYa zona norte",price:2800},
-    {id:"d4",name:"Andreani — todo el país",price:4500},
-  ],
-  fechas:["Jueves 8 de mayo","Jueves 15 de mayo","Jueves 22 de mayo","Jueves 29 de mayo","A coordinar por WhatsApp"]
-};
+let cfg = null;
+let sel = {}, packSel = null, delSel = null, curStep = 0;
 
-let cfg=JSON.parse(localStorage.getItem(KEY)||'null')||defaultCfg;
-let sel={},packSel=null,delSel=null,curStep=0;
+// ── UTILIDADES ──────────────────────────────────────────
+const catLabel = c => ({premiado:'Premiado CMA',masivo:'Masivo',premium:'Premium',saludable:'Sin TACC'}[c]||c);
+const catBadge = c => ({premiado:'b-p',masivo:'b-m',premium:'b-pr',saludable:'b-s'}[c]||'b-m');
 
-function saveCfg(){localStorage.setItem(KEY,JSON.stringify(cfg));}
+async function callScript(params) {
+  const url = SCRIPT + '?' + new URLSearchParams(params);
+  const res = await fetch(url);
+  return res.json();
+}
 
-const catLabel=c=>({premiado:'Premiado CMA',masivo:'Masivo',premium:'Premium',saludable:'Sin TACC'}[c]||c);
-const catBadge=c=>({premiado:'b-p',masivo:'b-m',premium:'b-pr',saludable:'b-s'}[c]||'b-m');
-const fleteMap=()=>Object.fromEntries(cfg.delivery.map(d=>[d.id,d.price]));
+async function postScript(body) {
+  const res = await fetch(SCRIPT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(body)
+  });
+  return res.json();
+}
 
-/* ── RENDER PRODUCTS ── */
-function renderProds(){
-  const totalU=Object.values(sel).reduce((s,v)=>s+v,0);
-  document.getElementById('prod-grid').innerHTML=cfg.products.map(p=>{
-    const qty=sel[p.id]||0,isSel=qty>0;
-    const imgHtml=p.img
-      ?`<div class="prod-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=prod-img-placeholder>&#127863;</div>'"></div>`
-      :`<div class="prod-img-placeholder">&#127863;</div>`;
+// ── CARGAR CONFIG DESDE SHEETS ──────────────────────────
+async function loadConfig() {
+  try {
+    const data = await callScript({ action: 'getConfig' });
+    if (data && data.ok) {
+      cfg = data;
+      localStorage.setItem('alfamundo_wa_num', cfg.waNumber || '');
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+// ── RENDER PRODUCTOS ────────────────────────────────────
+function renderProds() {
+  if (!cfg) return;
+  const loading = document.getElementById('prod-loading');
+  const grid = document.getElementById('prod-grid');
+  loading.style.display = 'none';
+  grid.style.display = 'grid';
+
+  const totalU = Object.values(sel).reduce((s,v) => s+v, 0);
+  grid.innerHTML = cfg.products.map(p => {
+    const qty = sel[p.id] || 0, isSel = qty > 0;
+    const imgHtml = p.img
+      ? `<div class="prod-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.className='prod-img-placeholder';this.parentElement.innerHTML='&#127863;'"></div>`
+      : `<div class="prod-img-placeholder">&#127863;</div>`;
     return `<div class="prod-card${isSel?' sel':''}" id="pc-${p.id}">
       ${imgHtml}
       <div class="prod-top" onclick="toggleProd('${p.id}')">
@@ -454,254 +449,259 @@ function renderProds(){
         <div class="prod-desc">${p.desc}</div>
         <div class="prod-price">$${p.price.toLocaleString('es-AR')}/u</div>
       </div>
-      ${isSel?`<div class="qty-row">
+      ${isSel ? `<div class="qty-row">
         <button class="qty-btn" onclick="chgQty('${p.id}',-1)">&#8722;</button>
         <span class="qty-val">${qty}</span>
-        <button class="qty-btn" onclick="chgQty('${p.id}',1)">&#43;</button>
+        <button class="qty-btn" onclick="chgQty('${p.id}',1)">+</button>
         <span class="qty-sub">$${(p.price*qty).toLocaleString('es-AR')}</span>
-      </div>`:''}
+      </div>` : ''}
     </div>`;
   }).join('');
   updateCart();
 }
 
-function toggleProd(id){
-  sel[id]?delete sel[id]:(sel[id]=1);
+function toggleProd(id) {
+  sel[id] ? delete sel[id] : (sel[id] = 1);
   renderProds();
 }
-function chgQty(id,d){
-  sel[id]=(sel[id]||0)+d;
-  if(sel[id]<=0)delete sel[id];
+function chgQty(id, d) {
+  sel[id] = (sel[id]||0) + d;
+  if (sel[id] <= 0) delete sel[id];
   renderProds();
 }
-
-function updateCart(){
-  const totalU=Object.values(sel).reduce((s,v)=>s+v,0);
-  const sub=Object.entries(sel).reduce((s,[id,qty])=>{const p=cfg.products.find(x=>x.id===id);return s+(p?p.price*qty:0);},0);
-  const marcas=Object.keys(sel).map(id=>cfg.products.find(x=>x.id===id)?.name).filter(Boolean);
-  document.getElementById('cart-u').textContent=totalU;
-  document.getElementById('cart-marcas-txt').innerHTML=marcas.length?`<span style="color:#C9A98A;font-size:11px">${marcas.slice(0,3).join(', ')}${marcas.length>3?' +más':''}</span>`:'';
-  document.getElementById('cart-sub').textContent='$'+sub.toLocaleString('es-AR');
-  const ok=totalU>=6;
-  document.getElementById('btn-s0').disabled=!ok;
-  document.getElementById('min-warn').style.display=(!ok&&totalU>0)?'block':'none';
+function updateCart() {
+  const totalU = Object.values(sel).reduce((s,v) => s+v, 0);
+  const sub = Object.entries(sel).reduce((s,[id,qty]) => {
+    const p = cfg.products.find(x => x.id===id);
+    return s + (p ? p.price*qty : 0);
+  }, 0);
+  const names = Object.keys(sel).map(id => cfg.products.find(x=>x.id===id)?.name).filter(Boolean);
+  document.getElementById('cart-u').textContent = totalU;
+  document.getElementById('cart-txt').innerHTML = names.length
+    ? `<span style="color:#C9A98A;font-size:11px">${names.slice(0,3).join(', ')}${names.length>3?' +más':''}</span>` : '';
+  document.getElementById('cart-sub').textContent = '$' + sub.toLocaleString('es-AR');
+  const ok = totalU >= 6;
+  document.getElementById('btn-s0').disabled = !ok;
+  document.getElementById('min-warn').style.display = (!ok && totalU > 0) ? 'block' : 'none';
 }
 
-/* ── PACKAGING ── */
-function renderPacking(){
-  document.getElementById('pack-grid').innerHTML=cfg.packaging.map(p=>`
+// ── PACKAGING ───────────────────────────────────────────
+function renderPacking() {
+  document.getElementById('pack-grid').innerHTML = cfg.packaging.map(p => `
     <div class="pack-opt${packSel===p.id?' sel':''}" onclick="selPack('${p.id}')">
       <div><div class="pack-name">${p.name}</div><div class="pack-desc">${p.desc}</div></div>
       <div class="pack-price">${p.price>0?'+$'+p.price.toLocaleString('es-AR'):'Incluido'}</div>
     </div>`).join('');
   renderTotalS1();
 }
-function selPack(id){packSel=id;renderPacking();document.getElementById('btn-s1').disabled=false;}
-function renderTotalS1(){
-  const sub=Object.entries(sel).reduce((s,[id,qty])=>{const p=cfg.products.find(x=>x.id===id);return s+(p?p.price*qty:0);},0);
-  const pack=packSel?cfg.packaging.find(x=>x.id===packSel):null;
-  const packP=pack?pack.price:0;
-  document.getElementById('total-s1').innerHTML=`
+function selPack(id) { packSel=id; renderPacking(); document.getElementById('btn-s1').disabled=false; }
+function renderTotalS1() {
+  const sub = Object.entries(sel).reduce((s,[id,qty]) => { const p=cfg.products.find(x=>x.id===id); return s+(p?p.price*qty:0); }, 0);
+  const pack = packSel ? cfg.packaging.find(x=>x.id===packSel) : null;
+  const packP = pack ? pack.price : 0;
+  document.getElementById('total-s1').innerHTML = `
     <div class="total-row"><span>Subtotal alfajores</span><span>$${sub.toLocaleString('es-AR')}</span></div>
     <div class="total-row"><span>Packaging${pack?' — '+pack.name:''}</span><span>${packP>0?'+$'+packP.toLocaleString('es-AR'):'Incluido'}</span></div>
     <div class="total-row main"><span>TOTAL (sin envío)</span><span>$${(sub+packP).toLocaleString('es-AR')}</span></div>`;
 }
 
-/* ── DELIVERY ── */
-function renderDelivery(){
-  document.getElementById('del-grid').innerHTML=cfg.delivery.map(d=>`
+// ── DELIVERY ────────────────────────────────────────────
+function renderDelivery() {
+  document.getElementById('del-grid').innerHTML = cfg.delivery.map(d => `
     <div class="del-opt${delSel===d.id?' sel':''}" onclick="selDel('${d.id}')">
       <div class="del-name">${d.name}</div>
       <div class="del-price">${d.price===0?'Sin costo':'$'+d.price.toLocaleString('es-AR')}</div>
     </div>`).join('');
 }
-function selDel(id){
-  delSel=id;renderDelivery();
-  const d=cfg.delivery.find(x=>x.id===id);
-  document.getElementById('addr-group').style.display=(d&&d.price>0)?'block':'none';
+function selDel(id) {
+  delSel = id; renderDelivery();
+  const d = cfg.delivery.find(x=>x.id===id);
+  document.getElementById('addr-group').style.display = (d&&d.price>0) ? 'block' : 'none';
   chkS2();
 }
-
-/* ── FECHAS ── */
-function renderFechas(){
-  document.getElementById('f-fecha').innerHTML='<option value="">Seleccioná una fecha</option>'+
-    cfg.fechas.map(f=>`<option>${f}</option>`).join('');
+function renderFechas() {
+  document.getElementById('f-fecha').innerHTML = '<option value="">Seleccioná una fecha</option>' +
+    cfg.fechas.map(f => `<option>${f}</option>`).join('');
+}
+function chkS2() {
+  const n = document.getElementById('f-nombre').value.trim();
+  const t = document.getElementById('f-tel').value.trim();
+  const f = document.getElementById('f-fecha').value;
+  document.getElementById('btn-s2').disabled = !(n && t && f && delSel);
 }
 
-function chkS2(){
-  const n=document.getElementById('f-nombre').value.trim();
-  const t=document.getElementById('f-tel').value.trim();
-  const f=document.getElementById('f-fecha').value;
-  document.getElementById('btn-s2').disabled=!(n&&t&&f&&delSel);
-}
-
-/* ── CONFIRM + ENVIAR ── */
-function buildPedidoData(){
-  const selProds=Object.entries(sel).map(([id,qty])=>({...cfg.products.find(x=>x.id===id),qty})).filter(p=>p.name);
-  const sub=selProds.reduce((s,p)=>s+p.price*p.qty,0);
-  const pack=packSel?cfg.packaging.find(x=>x.id===packSel):null;
-  const del=delSel?cfg.delivery.find(x=>x.id===delSel):null;
-  const packP=pack?pack.price:0;
-  const delP=del?del.price:0;
-  const total=sub+packP+delP;
-  const totalU=Object.values(sel).reduce((s,v)=>s+v,0);
-  return{
-    nombre:document.getElementById('f-nombre').value.trim(),
-    tel:document.getElementById('f-tel').value.trim(),
-    email:document.getElementById('f-email').value.trim(),
-    fecha:document.getElementById('f-fecha').value,
-    ocas:document.getElementById('f-ocas').value,
-    alerg:document.getElementById('f-alerg').value.trim(),
-    msgCard:document.getElementById('f-msg').value.trim(),
-    dir:document.getElementById('f-dir').value.trim(),
-    selProds,sub,pack,del,packP,delP,total,totalU,
-    semana:cfg.week.name
+// ── CONFIRMAR Y ENVIAR ──────────────────────────────────
+function buildData() {
+  const selProds = Object.entries(sel).map(([id,qty]) => ({...cfg.products.find(x=>x.id===id), qty})).filter(p=>p.name);
+  const sub = selProds.reduce((s,p) => s+p.price*p.qty, 0);
+  const pack = packSel ? cfg.packaging.find(x=>x.id===packSel) : null;
+  const del = delSel ? cfg.delivery.find(x=>x.id===delSel) : null;
+  const packP = pack ? pack.price : 0;
+  const delP = del ? del.price : 0;
+  return {
+    nombre: document.getElementById('f-nombre').value.trim(),
+    tel: document.getElementById('f-tel').value.trim(),
+    email: document.getElementById('f-email').value.trim(),
+    fecha: document.getElementById('f-fecha').value,
+    ocas: document.getElementById('f-ocas').value,
+    alerg: document.getElementById('f-alerg').value.trim(),
+    msgCard: document.getElementById('f-msg').value.trim(),
+    dir: document.getElementById('f-dir').value.trim(),
+    selProds, sub, pack, del, packP, delP,
+    total: sub + packP + delP,
+    totalU: Object.values(sel).reduce((s,v) => s+v, 0),
+    semana: cfg.week.name
   };
 }
 
-function buildConfirm(){
-  const d=buildPedidoData();
-  document.getElementById('confirm-prods').innerHTML=
-    `<div class="confirm-title">Alfajores (${d.totalU} unidades)</div>`+
-    d.selProds.map(p=>`<div class="confirm-row"><span class="cr-label">${p.qty>1?p.qty+'x ':''} ${p.name}</span><span class="cr-val">$${(p.price*p.qty).toLocaleString('es-AR')}</span></div>`).join('')+
-    `<div class="confirm-row"><span class="cr-label">Packaging — ${d.pack?d.pack.name:'—'}</span><span class="cr-val">${d.packP>0?'+$'+d.packP.toLocaleString('es-AR'):'Incluido'}</span></div>`+
+function buildConfirm() {
+  const d = buildData();
+  document.getElementById('confirm-prods').innerHTML =
+    `<div class="confirm-title">Alfajores (${d.totalU} unidades)</div>` +
+    d.selProds.map(p => `<div class="confirm-row"><span class="cr-label">${p.qty>1?p.qty+'x ':''} ${p.name}</span><span class="cr-val">$${(p.price*p.qty).toLocaleString('es-AR')}</span></div>`).join('') +
+    `<div class="confirm-row"><span class="cr-label">Packaging — ${d.pack?d.pack.name:'—'}</span><span class="cr-val">${d.packP>0?'+$'+d.packP.toLocaleString('es-AR'):'Incluido'}</span></div>` +
     `<div class="confirm-row" style="border-top:2px solid #3B1A08;margin-top:6px;padding-top:8px"><span class="cr-label" style="font-weight:700">Subtotal</span><span class="cr-val">$${(d.sub+d.packP).toLocaleString('es-AR')}</span></div>`;
 
-  document.getElementById('confirm-datos').innerHTML=
-    `<div class="confirm-title">Datos del pedido</div>`+
-    `<div class="confirm-row"><span class="cr-label">Nombre</span><span class="cr-val">${d.nombre}</span></div>`+
-    `<div class="confirm-row"><span class="cr-label">WhatsApp</span><span class="cr-val">${d.tel}</span></div>`+
-    (d.email?`<div class="confirm-row"><span class="cr-label">Email</span><span class="cr-val">${d.email}</span></div>`:'')+
-    `<div class="confirm-row"><span class="cr-label">Entrega</span><span class="cr-val">${d.del?d.del.name:'—'}</span></div>`+
-    (d.dir?`<div class="confirm-row"><span class="cr-label">Dirección</span><span class="cr-val">${d.dir}</span></div>`:'')+
-    `<div class="confirm-row"><span class="cr-label">Fecha</span><span class="cr-val">${d.fecha}</span></div>`+
-    (d.ocas?`<div class="confirm-row"><span class="cr-label">Ocasión</span><span class="cr-val">${d.ocas}</span></div>`:'')+
-    (d.alerg?`<div class="confirm-row"><span class="cr-label">Restricciones</span><span class="cr-val">${d.alerg}</span></div>`:'')+
-    (d.msgCard?`<div class="confirm-row"><span class="cr-label">Tarjeta</span><span class="cr-val">${d.msgCard}</span></div>`:'')+
-    `<div class="confirm-row" style="border-top:2px solid #3B1A08;margin-top:6px;padding-top:8px"><span class="cr-label">Envío</span><span class="cr-val">${d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR')}</span></div>`+
+  document.getElementById('confirm-datos').innerHTML =
+    `<div class="confirm-title">Datos del pedido</div>` +
+    `<div class="confirm-row"><span class="cr-label">Nombre</span><span class="cr-val">${d.nombre}</span></div>` +
+    `<div class="confirm-row"><span class="cr-label">WhatsApp</span><span class="cr-val">${d.tel}</span></div>` +
+    (d.email?`<div class="confirm-row"><span class="cr-label">Email</span><span class="cr-val">${d.email}</span></div>`:'') +
+    `<div class="confirm-row"><span class="cr-label">Entrega</span><span class="cr-val">${d.del?d.del.name:'—'}</span></div>` +
+    (d.dir?`<div class="confirm-row"><span class="cr-label">Dirección</span><span class="cr-val">${d.dir}</span></div>`:'') +
+    `<div class="confirm-row"><span class="cr-label">Fecha</span><span class="cr-val">${d.fecha}</span></div>` +
+    (d.ocas?`<div class="confirm-row"><span class="cr-label">Ocasión</span><span class="cr-val">${d.ocas}</span></div>`:'') +
+    (d.alerg?`<div class="confirm-row"><span class="cr-label">Restricciones</span><span class="cr-val">${d.alerg}</span></div>`:'') +
+    (d.msgCard?`<div class="confirm-row"><span class="cr-label">Tarjeta</span><span class="cr-val">${d.msgCard}</span></div>`:'') +
+    `<div class="confirm-row" style="border-top:2px solid #3B1A08;margin-top:6px;padding-top:8px"><span class="cr-label">Envío</span><span class="cr-val">${d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR')}</span></div>` +
     `<div class="confirm-row"><span class="cr-label" style="font-size:16px;font-weight:700;color:#3B1A08">TOTAL</span><span class="cr-val" style="font-size:18px;color:#3B1A08">$${d.total.toLocaleString('es-AR')}</span></div>`;
 
-  const prodLines=d.selProds.map(p=>`- ${p.qty>1?p.qty+'x ':''} ${p.name} ($${(p.price*p.qty).toLocaleString('es-AR')})`).join('\n');
-  document.getElementById('wa-msg').textContent=
-    `*PEDIDO ALFAMUNDO*\n${d.semana}\n\n`+
-    `Nombre: ${d.nombre}\nWhatsApp: ${d.tel}\n\n`+
-    `*Alfajores (${d.totalU} u.):*\n${prodLines}\n\n`+
-    `Subtotal: $${d.sub.toLocaleString('es-AR')}\n`+
-    `Packaging (${d.pack?d.pack.name:'—'}): ${d.packP>0?'+$'+d.packP.toLocaleString('es-AR'):'Incluido'}\n`+
-    `Envío (${d.del?d.del.name:'—'}): ${d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR')}\n`+
-    `*TOTAL: $${d.total.toLocaleString('es-AR')}*\n\n`+
-    `Fecha: ${d.fecha}`+
-    (d.ocas?`\nOcasión: ${d.ocas}`:'')+
-    (d.alerg?`\nRestricciones: ${d.alerg}`:'')+
-    (d.dir?`\nDirección: ${d.dir}`:'')+
-    (d.msgCard?`\nMensaje tarjeta: "${d.msgCard}"`:'')+
+  const prodLines = d.selProds.map(p => `- ${p.qty>1?p.qty+'x ':''} ${p.name} ($${(p.price*p.qty).toLocaleString('es-AR')})`).join('\n');
+  document.getElementById('wa-msg').textContent =
+    `*PEDIDO ALFAMUNDO*\n${d.semana}\n\n` +
+    `Nombre: ${d.nombre}\nWhatsApp: ${d.tel}\n\n` +
+    `*Alfajores (${d.totalU} u.):*\n${prodLines}\n\n` +
+    `Subtotal: $${d.sub.toLocaleString('es-AR')}\n` +
+    `Packaging (${d.pack?d.pack.name:'—'}): ${d.packP>0?'+$'+d.packP.toLocaleString('es-AR'):'Incluido'}\n` +
+    `Envío (${d.del?d.del.name:'—'}): ${d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR')}\n` +
+    `*TOTAL: $${d.total.toLocaleString('es-AR')}*\n\n` +
+    `Fecha: ${d.fecha}` +
+    (d.ocas?`\nOcasión: ${d.ocas}`:'') +
+    (d.alerg?`\nRestricciones: ${d.alerg}`:'') +
+    (d.dir?`\nDirección: ${d.dir}`:'') +
+    (d.msgCard?`\nMensaje tarjeta: "${d.msgCard}"`:'') +
     `\n\nConfirmo y aguardo datos de pago. Gracias!`;
 }
 
-async function enviarFormspree(d){
-  const prodLines=d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name} ($${(p.price*p.qty).toLocaleString('es-AR')})`).join(' | ');
-  try{
-    const res=await fetch(FORMSPREE,{
+function guardarPedidoLocal(d) {
+  const pedidos = JSON.parse(localStorage.getItem(PEDIDOS_KEY)||'[]');
+  pedidos.unshift({
+    id: Date.now(),
+    fecha: new Date().toLocaleDateString('es-AR'),
+    hora: new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
+    nombre: d.nombre, tel: d.tel, fechaEntrega: d.fecha,
+    productos: d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name}`).join(', '),
+    total: '$'+d.total.toLocaleString('es-AR'), estado: 'p',
+    detalle: `Pack: ${d.pack?d.pack.name:'—'} | Envío: ${d.del?d.del.name:'—'}` +
+      (d.ocas?` | ${d.ocas}`:'') + (d.alerg?` | Restricciones: ${d.alerg}`:'')
+  });
+  localStorage.setItem(PEDIDOS_KEY, JSON.stringify(pedidos.slice(0,100)));
+}
+
+async function enviarPedido() {
+  const d = buildData();
+  const btn = document.getElementById('copy-wa');
+  btn.textContent = 'Enviando...'; btn.disabled = true;
+
+  const prodStr = d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name} ($${(p.price*p.qty).toLocaleString('es-AR')})`).join(' | ');
+
+  const [, , ] = await Promise.all([
+    // Copiar al portapapeles
+    new Promise(resolve => {
+      const text = document.getElementById('wa-msg').textContent;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(text).then(resolve).catch(() => { fbCopy(text); resolve(); });
+      } else { fbCopy(text); resolve(); }
+    }),
+    // Guardar en Google Sheets
+    postScript({
+      action: 'savePedido',
+      pedido: {
+        fecha: new Date().toLocaleDateString('es-AR'),
+        hora: new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
+        nombre: d.nombre, whatsapp: d.tel, email: d.email||'',
+        productos: prodStr, unidades: d.totalU,
+        packaging: d.pack?d.pack.name:'—',
+        envio: d.del?d.del.name:'—',
+        total: '$'+d.total.toLocaleString('es-AR'),
+        fechaEntrega: d.fecha, ocasion: d.ocas||'',
+        restricciones: d.alerg||'', msgTarjeta: d.msgCard||''
+      }
+    }).catch(()=>null),
+    // Formspree backup
+    fetch(FORMSPREE, {
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        nombre:d.nombre,whatsapp:d.tel,email:d.email||'(no ingresado)',
-        semana:d.semana,alfajores:prodLines,unidades:d.totalU,
-        packaging:d.pack?d.pack.name:'—',envio:d.del?d.del.name:'—',
-        direccion:d.dir||'—',fecha:d.fecha,ocasion:d.ocas||'—',
-        restricciones:d.alerg||'ninguna',mensaje_tarjeta:d.msgCard||'—',
-        subtotal:'$'+d.sub.toLocaleString('es-AR'),
-        costo_packaging:d.packP>0?'$'+d.packP.toLocaleString('es-AR'):'Incluido',
-        costo_envio:d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR'),
-        total_pedido:'$'+d.total.toLocaleString('es-AR'),
-        _subject:`Nuevo pedido AlfaMundo — ${d.nombre} — $${d.total.toLocaleString('es-AR')}`
+      body: JSON.stringify({
+        nombre:d.nombre, whatsapp:d.tel, email:d.email||'—',
+        semana:d.semana, alfajores:prodStr, total:'$'+d.total.toLocaleString('es-AR'),
+        fecha:d.fecha, _subject:`Nuevo pedido AlfaMundo — ${d.nombre} — $${d.total.toLocaleString('es-AR')}`
       })
-    });
-    return res.ok;
-  }catch(e){return false;}
-}
-
-function guardarPedidoLocal(d){
-  const pedidos=JSON.parse(localStorage.getItem(PEDIDOS_KEY)||'[]');
-  pedidos.unshift({
-    id:Date.now(),fecha_pedido:new Date().toLocaleDateString('es-AR'),
-    hora:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
-    nombre:d.nombre,tel:d.tel,fecha_entrega:d.fecha,
-    productos:d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name}`).join(', '),
-    total:'$'+d.total.toLocaleString('es-AR'),estado:'pendiente',
-    detalle:`Pack: ${d.pack?d.pack.name:'—'} | Envío: ${d.del?d.del.name:'—'}`+
-      (d.ocas?` | ${d.ocas}`:'')+
-      (d.alerg?` | Restricciones: ${d.alerg}`:'')
-  });
-  localStorage.setItem(PEDIDOS_KEY,JSON.stringify(pedidos.slice(0,100)));
-}
-
-async function enviarPedido(){
-  const d=buildPedidoData();
-  const btn=document.getElementById('copy-wa');
-  btn.textContent='Enviando...';btn.disabled=true;
-
-  const [waOk,emailOk]=await Promise.all([
-    new Promise(resolve=>{
-      const text=document.getElementById('wa-msg').textContent;
-      if(navigator.clipboard&&navigator.clipboard.writeText){
-        navigator.clipboard.writeText(text).then(()=>resolve(true)).catch(()=>{fbCopy(text);resolve(true);});
-      } else {fbCopy(text);resolve(true);}
-    }),
-    enviarFormspree(d)
+    }).catch(()=>null)
   ]);
 
   guardarPedidoLocal(d);
 
-  const est=document.getElementById('email-status');
-  if(d.email&&emailOk){
-    est.className='email-status email-ok';
-    est.textContent='Copia del pedido enviada a tu email';
-    est.style.display='block';
-  }
+  const sb = document.getElementById('status-box');
+  sb.className = 'status-box status-ok';
+  sb.textContent = '✓ Pedido registrado en Google Sheets';
+  sb.style.display = 'block';
 
-  btn.textContent='Copiado! Abri WhatsApp y pega el mensaje';
-  btn.classList.add('ok');btn.disabled=false;
+  btn.textContent = '✓ Copiado! Abrí WhatsApp y pegá el mensaje';
+  btn.classList.add('ok'); btn.disabled = false;
 
-  const num=cfg.waNumber||'';
-  if(num&&num!=='5491100000000'){
-    setTimeout(()=>{window.open('https://wa.me/'+num,'_blank');},500);
+  const num = localStorage.getItem('alfamundo_wa_num') || '';
+  if (num && num !== '5491100000000') {
+    setTimeout(() => window.open('https://wa.me/'+num,'_blank'), 500);
   }
-  setTimeout(()=>{btn.textContent='Copiar y abrir WhatsApp';btn.classList.remove('ok');},4000);
+  setTimeout(() => { btn.textContent='Copiar y abrir WhatsApp'; btn.classList.remove('ok'); }, 4000);
 }
 
-function fbCopy(t){
-  const ta=document.createElement('textarea');ta.value=t;
-  ta.style.cssText='position:fixed;opacity:0;top:0;left:0';
-  document.body.appendChild(ta);ta.focus();ta.select();
-  try{document.execCommand('copy');}catch(e){}
+function fbCopy(t) {
+  const ta = document.createElement('textarea');
+  ta.value = t; ta.style.cssText='position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
   document.body.removeChild(ta);
 }
 
-/* ── STEPS ── */
-function goStep(n){
+// ── STEPS ───────────────────────────────────────────────
+function goStep(n) {
   window.scrollTo({top:0,behavior:'smooth'});
   document.getElementById('s'+curStep).classList.remove('on');
-  if(n===1)renderPacking();
-  if(n===2){renderDelivery();renderFechas();chkS2();}
-  if(n===3)buildConfirm();
-  curStep=n;
+  if (n===1) renderPacking();
+  if (n===2) { renderDelivery(); renderFechas(); chkS2(); }
+  if (n===3) buildConfirm();
+  curStep = n;
   document.getElementById('s'+n).classList.add('on');
-  for(let i=0;i<4;i++){
-    const d=document.getElementById('pr'+i);
-    d.className='pr-dot'+(i<n?' done':i===n?' on':'');
+  for(let i=0;i<4;i++) {
+    document.getElementById('pr'+i).className = 'pr-dot' + (i<n?' done':i===n?' on':'');
   }
 }
 
-/* ── SEMANA ── */
-function renderSemana(){
-  document.getElementById('wk-name').textContent=cfg.week.name;
-  document.getElementById('wk-theme').textContent=cfg.week.theme;
-  document.getElementById('wk-badge').textContent=cfg.week.badge||'Esta semana';
-  document.getElementById('week-prods').innerHTML=cfg.products.map(p=>{
-    const imgHtml=p.img
-      ?`<div class="prod-img"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=prod-img-placeholder>&#127863;</div>'"></div>`
-      :`<div class="prod-img-placeholder">&#127863;</div>`;
+// ── SEMANA ───────────────────────────────────────────────
+function renderSemana() {
+  if (!cfg) return;
+  document.getElementById('wk-name').textContent = cfg.week.name;
+  document.getElementById('wk-theme').textContent = cfg.week.theme;
+  document.getElementById('wk-badge').textContent = cfg.week.badge || 'Esta semana';
+  document.getElementById('semana-loading').style.display = 'none';
+  const grid = document.getElementById('week-prods');
+  grid.style.display = 'grid';
+  grid.innerHTML = cfg.products.map(p => {
+    const imgHtml = p.img
+      ? `<div class="prod-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.className='prod-img-placeholder';this.parentElement.innerHTML='&#127863;'"></div>`
+      : `<div class="prod-img-placeholder">&#127863;</div>`;
     return `<div class="prod-card" style="cursor:default">
       ${imgHtml}
       <div class="prod-top" style="cursor:default">
@@ -714,108 +714,110 @@ function renderSemana(){
   }).join('');
 }
 
-/* ── PEDIDOS RECIBIDOS ── */
-function renderPedidos(){
-  const pedidos=JSON.parse(localStorage.getItem(PEDIDOS_KEY)||'[]');
-  const list=document.getElementById('pedidos-list');
-  const count=document.getElementById('pedidos-count');
-  count.textContent=`${pedidos.length} pedido${pedidos.length!==1?'s':''} registrado${pedidos.length!==1?'s':''}`;
-  if(!pedidos.length){
-    list.innerHTML=`<div class="no-pedidos">&#128230; Todavía no hay pedidos registrados.<br>Los pedidos aparecen acá cuando los clientes usan el formulario.</div>`;
+// ── PEDIDOS ──────────────────────────────────────────────
+function renderPedidos() {
+  const pedidos = JSON.parse(localStorage.getItem(PEDIDOS_KEY)||'[]');
+  document.getElementById('pedidos-count').textContent = `${pedidos.length} pedido${pedidos.length!==1?'s':''} registrado${pedidos.length!==1?'s':''}`;
+  const list = document.getElementById('pedidos-list');
+  if (!pedidos.length) {
+    list.innerHTML = `<div class="no-items">&#128230; Todavía no hay pedidos.<br>Los pedidos aparecen acá cuando los clientes usan el formulario.</div>`;
     return;
   }
-  list.innerHTML=pedidos.map((p,i)=>`
+  const estados = {p:'⏳ Pendiente',c:'✅ Confirmado',e:'📦 Entregado'};
+  const clases = {p:'st-p',c:'st-c',e:'st-e'};
+  list.innerHTML = pedidos.map((p,i) => `
     <div class="pedido-card">
       <div class="pedido-hdr">
-        <div>
-          <div class="pedido-nombre">${p.nombre}</div>
-          <div class="pedido-fecha">${p.fecha_pedido} ${p.hora} — Entrega: ${p.fecha_entrega}</div>
-        </div>
+        <div><div class="pedido-nombre">${p.nombre}</div>
+        <div class="pedido-fecha">${p.fecha} ${p.hora} — Entrega: ${p.fechaEntrega}</div></div>
         <div class="pedido-total">${p.total}</div>
       </div>
       <div class="pedido-detalle">${p.productos}<br><span style="color:#C9A98A">${p.detalle}</span></div>
       <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-        <span class="pedido-estado st-${p.estado}" onclick="cambiarEstado(${i})">${
-          p.estado==='pendiente'?'⏳ Pendiente':p.estado==='confirmado'?'✅ Confirmado':'📦 Entregado'
-        }</span>
-        <span style="font-size:11px;color:#7B5A3A">WhatsApp: ${p.tel}</span>
+        <span class="pedido-estado ${clases[p.estado]||'st-p'}" onclick="cambiarEstado(${i})">${estados[p.estado]||'⏳ Pendiente'}</span>
+        <span style="font-size:11px;color:#7B5A3A">WA: ${p.tel}</span>
       </div>
     </div>`).join('');
 }
-
-function cambiarEstado(i){
-  const pedidos=JSON.parse(localStorage.getItem(PEDIDOS_KEY)||'[]');
-  const estados=['pendiente','confirmado','entregado'];
-  const cur=estados.indexOf(pedidos[i].estado);
-  pedidos[i].estado=estados[(cur+1)%3];
-  localStorage.setItem(PEDIDOS_KEY,JSON.stringify(pedidos));
+function cambiarEstado(i) {
+  const pedidos = JSON.parse(localStorage.getItem(PEDIDOS_KEY)||'[]');
+  const ciclo = {p:'c',c:'e',e:'p'};
+  pedidos[i].estado = ciclo[pedidos[i].estado||'p']||'c';
+  localStorage.setItem(PEDIDOS_KEY, JSON.stringify(pedidos));
   renderPedidos();
 }
-
-function limpiarPedidos(){
-  if(confirm('¿Eliminar todos los pedidos del historial?')){
-    localStorage.removeItem(PEDIDOS_KEY);renderPedidos();
+function limpiarPedidos() {
+  if (confirm('¿Eliminar todos los pedidos del historial local?')) {
+    localStorage.removeItem(PEDIDOS_KEY); renderPedidos();
   }
 }
 
-/* ── TABS ── */
-function showTab(t,btn){
+// ── TABS ─────────────────────────────────────────────────
+function showTab(t, btn) {
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   btn.classList.add('on');
   document.getElementById('tab-'+t).classList.add('on');
-  if(t==='semana')renderSemana();
-  if(t==='recibidos')renderPedidos();
+  if (t==='semana') renderSemana();
+  if (t==='recibidos') renderPedidos();
 }
 
-/* ── ADMIN ── */
-function toggleAdmin(){
-  const o=document.getElementById('admin-overlay');
-  if(o.style.display==='none'||!o.style.display){
-    o.style.display='block';
-    document.body.style.overflow='hidden';
-    loadAdmin();
+// ── ADMIN ────────────────────────────────────────────────
+async function toggleAdmin() {
+  const o = document.getElementById('admin-overlay');
+  if (!o.style.display || o.style.display==='none') {
+    o.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('admin-loading').style.display = 'block';
+    document.getElementById('admin-content').style.display = 'none';
+    const ok = await loadConfig();
+    document.getElementById('admin-loading').style.display = 'none';
+    document.getElementById('admin-content').style.display = 'block';
+    if (ok) loadAdminFields();
+    else {
+      document.getElementById('sync-status').textContent = '⚠️ No se pudo conectar con Google Sheets. Revisá la conexión.';
+      document.getElementById('sync-status').style.display = 'block';
+    }
   } else {
-    o.style.display='none';
-    document.body.style.overflow='';
+    o.style.display = 'none';
+    document.body.style.overflow = '';
   }
 }
 
-function loadAdmin(){
-  document.getElementById('a-wname').value=cfg.week.name;
-  document.getElementById('a-wtheme').value=cfg.week.theme;
-  document.getElementById('a-wdate').value=cfg.week.date;
-  document.getElementById('a-wbadge').value=cfg.week.badge||'';
-  document.getElementById('a-wanum').value=cfg.waNumber||'';
-  renderAdminProds();renderAdminPack();renderAdminDel();renderAdminFechas();
+function loadAdminFields() {
+  document.getElementById('a-wname').value = cfg.week.name || '';
+  document.getElementById('a-wtheme').value = cfg.week.theme || '';
+  document.getElementById('a-wdate').value = cfg.week.date || '';
+  document.getElementById('a-wbadge').value = cfg.week.badge || '';
+  document.getElementById('a-wanum').value = localStorage.getItem('alfamundo_wa_num') || '';
+  renderAdminProds(); renderAdminPack(); renderAdminDel(); renderAdminFechas();
 }
 
-function renderAdminProds(){
-  document.getElementById('a-prod-list').innerHTML=cfg.products.map((p,i)=>`
+function renderAdminProds() {
+  document.getElementById('a-prod-list').innerHTML = (cfg.products||[]).map((p,i) => `
     <div class="admin-item">
-      ${p.img?`<img src="${p.img}" style="width:32px;height:32px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:'' }
+      ${p.img?`<img src="${p.img}" style="width:30px;height:30px;border-radius:6px;object-fit:cover" onerror="this.style.display='none'">`:'' }
       <span class="admin-item-name">${p.name}</span>
       <span class="admin-item-cat">${catLabel(p.cat)}</span>
       <span class="admin-item-price">$${p.price.toLocaleString('es-AR')}</span>
       <button class="btn-del" onclick="delProd(${i})">&#10005;</button>
-    </div>`).join('')||`<div style="color:#C9A98A;font-size:13px;padding:8px">Sin alfajores cargados.</div>`;
+    </div>`).join('') || `<div style="color:#C9A98A;font-size:13px;padding:8px">Sin alfajores cargados.</div>`;
 }
-
-function addProd(){
-  const n=document.getElementById('a-pname').value.trim();
-  const c=document.getElementById('a-pcat').value;
-  const d=document.getElementById('a-pdesc').value.trim();
-  const p=parseInt(document.getElementById('a-pprice').value);
-  const img=document.getElementById('a-pimg').value.trim();
-  if(!n||!p){alert('Completá nombre y precio');return;}
+function addProd() {
+  const n = document.getElementById('a-pname').value.trim();
+  const c = document.getElementById('a-pcat').value;
+  const d = document.getElementById('a-pdesc').value.trim();
+  const p = parseInt(document.getElementById('a-pprice').value);
+  const img = document.getElementById('a-pimg').value.trim();
+  if (!n||!p) { alert('Completá nombre y precio'); return; }
   cfg.products.push({id:'u'+Date.now(),name:n,cat:c,desc:d||'',price:p,img:img||''});
   ['a-pname','a-pdesc','a-pprice','a-pimg'].forEach(id=>document.getElementById(id).value='');
   renderAdminProds();
 }
-function delProd(i){cfg.products.splice(i,1);renderAdminProds();}
+function delProd(i) { cfg.products.splice(i,1); renderAdminProds(); }
 
-function renderAdminPack(){
-  document.getElementById('a-pack-list').innerHTML=cfg.packaging.map((p,i)=>`
+function renderAdminPack() {
+  document.getElementById('a-pack-list').innerHTML = (cfg.packaging||[]).map((p,i) => `
     <div class="admin-item">
       <span class="admin-item-name">${p.name}</span>
       <span class="admin-item-cat">${p.desc}</span>
@@ -823,7 +825,7 @@ function renderAdminPack(){
       <button class="btn-del" onclick="delPack(${i})">&#10005;</button>
     </div>`).join('');
 }
-function addPack(){
+function addPack() {
   const n=document.getElementById('a-pkname').value.trim();
   const d=document.getElementById('a-pkdesc').value.trim();
   const p=parseInt(document.getElementById('a-pkprice').value)||0;
@@ -834,8 +836,8 @@ function addPack(){
 }
 function delPack(i){cfg.packaging.splice(i,1);renderAdminPack();}
 
-function renderAdminDel(){
-  document.getElementById('a-del-list').innerHTML=cfg.delivery.map((d,i)=>`
+function renderAdminDel() {
+  document.getElementById('a-del-list').innerHTML = (cfg.delivery||[]).map((d,i) => `
     <div class="admin-item">
       <span class="admin-item-name">${d.name}</span>
       <span class="admin-item-price">${d.price===0?'Sin costo':'$'+d.price.toLocaleString('es-AR')}</span>
@@ -853,7 +855,7 @@ function addDel(){
 function delDel(i){cfg.delivery.splice(i,1);renderAdminDel();}
 
 function renderAdminFechas(){
-  document.getElementById('a-fecha-list').innerHTML=cfg.fechas.map((f,i)=>`
+  document.getElementById('a-fecha-list').innerHTML=(cfg.fechas||[]).map((f,i)=>`
     <div class="admin-item">
       <span class="admin-item-name">${f}</span>
       <button class="btn-del" onclick="delFecha(${i})">&#10005;</button>
@@ -868,25 +870,64 @@ function addFecha(){
 }
 function delFecha(i){cfg.fechas.splice(i,1);renderAdminFechas();}
 
-function saveConfig(){
-  cfg.week={
-    name:document.getElementById('a-wname').value.trim()||cfg.week.name,
-    theme:document.getElementById('a-wtheme').value.trim()||cfg.week.theme,
-    date:document.getElementById('a-wdate').value.trim()||cfg.week.date,
-    badge:document.getElementById('a-wbadge').value.trim()||cfg.week.badge
+async function saveConfig() {
+  const btn = document.getElementById('btn-save');
+  const status = document.getElementById('sync-status');
+  btn.disabled = true;
+  btn.textContent = 'Guardando en Google Sheets...';
+  status.style.display = 'block';
+  status.textContent = '⏳ Sincronizando...';
+
+  cfg.week = {
+    name: document.getElementById('a-wname').value.trim() || cfg.week.name,
+    theme: document.getElementById('a-wtheme').value.trim() || cfg.week.theme,
+    date: document.getElementById('a-wdate').value.trim() || cfg.week.date,
+    badge: document.getElementById('a-wbadge').value.trim() || cfg.week.badge
   };
-  cfg.waNumber=document.getElementById('a-wanum').value.trim();
-  saveCfg();
-  sel={};packSel=null;delSel=null;curStep=0;
-  renderProds();renderSemana();
-  const ok=document.getElementById('save-ok');
-  ok.style.display='block';
-  setTimeout(()=>{ok.style.display='none';toggleAdmin();},1500);
+  const waNum = document.getElementById('a-wanum').value.trim();
+  if (waNum) localStorage.setItem('alfamundo_wa_num', waNum);
+
+  try {
+    const result = await postScript({ action: 'saveConfig', config: cfg });
+    if (result && result.ok) {
+      status.textContent = '✓ Guardado en Google Sheets correctamente';
+      btn.textContent = '✓ Guardado!';
+      sel={}; packSel=null; delSel=null; curStep=0;
+      renderProds(); renderSemana();
+      setTimeout(() => {
+        toggleAdmin();
+        btn.disabled=false; btn.textContent='✓ Guardar en Google Sheets';
+        status.style.display='none';
+      }, 1800);
+    } else {
+      throw new Error(result?.error || 'Error desconocido');
+    }
+  } catch(err) {
+    status.textContent = '⚠️ Error al guardar: ' + err.message + '. Intentá de nuevo.';
+    btn.disabled = false;
+    btn.textContent = '✓ Guardar en Google Sheets';
+  }
 }
 
-/* ── INIT ── */
-renderProds();
-renderSemana();
+// ── INICIO ────────────────────────────────────────────────
+async function init() {
+  const ok = await loadConfig();
+  if (ok) {
+    renderProds();
+    renderSemana();
+  } else {
+    document.getElementById('prod-loading').innerHTML =
+      `<div style="text-align:center;padding:30px;color:#7B5A3A">
+        ⚠️ No se pudo cargar el catálogo.<br>
+        <button onclick="init()" style="margin-top:12px;padding:10px 20px;background:#3B1A08;color:#fff;border:none;border-radius:8px;cursor:pointer">Reintentar</button>
+      </div>`;
+    document.getElementById('semana-loading').innerHTML =
+      `<div style="text-align:center;padding:20px;color:#7B5A3A">⚠️ Sin conexión. Reintentá en un momento.</div>`;
+  }
+}
+
+init();
 </script>
 </body>
 </html>
+
