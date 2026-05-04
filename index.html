@@ -170,7 +170,7 @@ textarea{resize:vertical;min-height:72px}
   <div class="tab" onclick="showTab('semana',this)">&#128197; Esta semana</div>
   <div class="tab" onclick="showTab('comprar',this)">&#10067; Cómo comprar</div>
   <div class="tab" onclick="showTab('nosotros',this)">&#127942; Quiénes somos</div>
-  <div class="tab" onclick="showTab('recibidos',this)">&#128229; Pedidos</div>
+  <div class="tab" id="tab-recibidos-btn" style="display:none" onclick="showTab('recibidos',this)">&#128229; Pedidos</div>
 </div>
 
 <!-- PEDIDO -->
@@ -683,7 +683,9 @@ async function enviarPedido(){
 
   guardarLocal(d);
   const sb=document.getElementById('status-box');
-  sb.className='status-box st-ok';sb.textContent='✓ Pedido registrado';sb.style.display='block';
+  sb.className='status-box st-ok';
+  sb.innerHTML='<div style="font-size:16px;font-weight:700;margin-bottom:6px">🎉 ¡Muchas gracias por tu compra!</div><div style="font-size:13px">En breve serás contactado para coordinar la entrega.</div>';
+  sb.style.cssText='display:block;text-align:center;padding:18px 16px;border-radius:12px;background:#E8F5E9;border:1px solid #A8D887;color:#2E7D32;margin-bottom:10px';
   btn.textContent='✓ Copiado! Abrí WhatsApp y pegá';btn.classList.add('ok');btn.disabled=false;
   const num=localStorage.getItem('alf_wa')||'';
   if(num&&num!=='5491100000000')setTimeout(()=>window.open('https://wa.me/'+num,'_blank'),500);
@@ -817,11 +819,10 @@ function showTab(t,btn){
 // ── ADMIN ──────────────────────────────────────────────
 function pedirClave(){
   const clave=prompt('Contraseña:');
-  if(clave==='Tomate') toggleAdmin();
-}
-function pedirClave(){
-  const clave=prompt('Contraseña:');
-  if(clave==='Tomate') toggleAdmin();
+  if(clave==='Tomate'){
+    document.getElementById('tab-recibidos-btn').style.display='flex';
+    toggleAdmin();
+  }
 }
 async function toggleAdmin(){
   const o=document.getElementById('admin-overlay');
@@ -947,3 +948,4 @@ init();
 </script>
 </body>
 </html>
+
