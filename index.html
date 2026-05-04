@@ -44,8 +44,7 @@ body{font-family:Arial,sans-serif;background:#FFF8EE;color:#1F2D3D;font-size:16p
 .prod-img-wrap{width:100%;aspect-ratio:1;overflow:hidden;background:#F5EDD8;position:relative}
 .prod-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
 .agotado-badge{position:absolute;bottom:6px;left:6px;background:#C62828;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px}
-.prod-top{padding:10px 10px 6px;cursor:pointer;position:relative}
-.prod-card.agotado .prod-top{cursor:not-allowed}
+.prod-top{padding:10px 10px 6px;position:relative}
 .prod-check{position:absolute;top:8px;right:8px;width:24px;height:24px;border-radius:50%;background:#E0C9A6;display:flex;align-items:center;justify-content:center}
 .prod-card.sel .prod-check{background:#C9972A}
 .prod-badge{font-size:9px;border-radius:3px;padding:2px 6px;font-weight:700;display:inline-block;margin-bottom:4px;line-height:1.3}
@@ -96,16 +95,13 @@ textarea{resize:vertical;min-height:72px}
 .st-err{background:#FFEBEE;color:#C62828;border:1px solid #FFCDD2}
 .instruc{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#7B5A3A;line-height:1.8}
 .instruc strong{color:#3B1A08}
-/* SEMANA */
 .week-banner{background:#3B1A08;border-radius:12px;padding:16px;margin-bottom:16px}
 .week-info{color:#fff;font-size:16px;font-weight:700}
 .week-sub{color:#C9972A;font-size:12px;margin-top:4px}
 .week-badge{display:inline-block;background:#F5C842;color:#3B1A08;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;margin-top:8px}
-/* COMO COMPRAR */
 .paso-card{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start}
 .paso-num{font-size:22px;flex-shrink:0;line-height:1.2}
 .paso-desc{font-size:14px;color:#1F2D3D;line-height:1.6}
-/* QUIENES SOMOS */
 .qs-card{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:18px;margin-bottom:14px}
 .qs-titulo{font-size:18px;font-weight:700;color:#3B1A08;margin-bottom:6px}
 .qs-subtitulo{font-size:13px;color:#C9972A;margin-bottom:14px;font-weight:700}
@@ -113,7 +109,6 @@ textarea{resize:vertical;min-height:72px}
 .qs-field:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .qs-label{font-size:11px;font-weight:700;color:#7B5A3A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .qs-val{font-size:14px;color:#1F2D3D;line-height:1.6}
-/* PEDIDOS */
 .pedido-card{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:14px;margin-bottom:10px}
 .pedido-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .pedido-nombre{font-size:14px;font-weight:700;color:#3B1A08}
@@ -125,7 +120,6 @@ textarea{resize:vertical;min-height:72px}
 .est-c{background:#E8F5E9;color:#2E7D32}
 .est-e{background:#E3F2FD;color:#1565C0}
 .no-items{text-align:center;padding:30px 20px;color:#7B5A3A;font-size:14px}
-/* ADMIN */
 .admin-overlay{display:none;position:fixed;inset:0;background:#1A0A00;z-index:100;overflow-y:auto;padding:16px}
 .admin-section{background:#2C1308;border:1px solid #5D3A1A;border-radius:12px;padding:16px;margin-bottom:14px}
 .admin-section h3{font-size:15px;font-weight:700;color:#F5C842;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid #5D3A1A}
@@ -370,9 +364,11 @@ textarea{resize:vertical;min-height:72px}
 <div class="footer">AlfaMundo &mdash; San Fernando, Buenos Aires &mdash; El mejor alfajor del mundo</div>
 
 <script>
-const SCRIPT='https://script.google.com/macros/s/AKfycbytKtQ_cW_EBULeb08arwVzaYEG1TsOcPmBsRKOadIvYkbukPDj30LUbAJBIvv7KJx9KQ/exec';
-const FORMSPREE='https://formspree.io/f/xaqvqazk';
-const PKEY='alfamundo_pedidos';
+// ── CONFIGURACIÓN ──────────────────────────────────────
+// Reemplazá estas dos URLs con las tuyas:
+const SCRIPT   = 'https://script.google.com/macros/s/AKfycbwg4dI5CnnWjAaeuXkUBWT1T_R5pliGmxUh4gL7QgVTMsVEA8KRgzJTQWniF5isEggE/exec';
+const FORMSPREE= 'https://formspree.io/f/xaqvqazk';
+
 let cfg=null,sel={},packSel=null,delSel=null,curStep=0;
 
 const catLabel=c=>({premiado:'Premiado CMA',masivo:'Masivo',premium:'Premium',saludable:'Sin TACC'}[c]||c);
@@ -402,7 +398,7 @@ function renderProds(){
   const cont=document.getElementById('prod-container');
   cont.style.display='block';
 
-  const stock=cfg.products.filter(p=>p.stock==='stock');
+  const stock  =cfg.products.filter(p=>p.stock==='stock');
   const agotado=cfg.products.filter(p=>p.stock==='agotado');
 
   let html='';
@@ -420,14 +416,18 @@ function renderProds(){
   updateCart();
 }
 
+// FIX: onclick único y correcto — sin atributo duplicado
 function prodCard(p){
   const qty=sel[p.id]||0,isSel=qty>0,isAgo=p.stock==='agotado';
   const imgHtml=p.img
     ?`<div class="prod-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=prod-img-placeholder>&#127863;</div>'"><div class="agotado-badge" style="display:${isAgo?'block':'none'}">Agotado</div></div>`
     :`<div class="prod-img-placeholder" style="position:relative">&#127863;${isAgo?'<div class="agotado-badge">Agotado</div>':''}</div>`;
+
+  const clickAttr = isAgo ? '' : `onclick="toggleProd('${p.id}')"`;
+
   return `<div class="prod-card${isSel?' sel':''}${isAgo?' agotado':''}" id="pc-${p.id}">
     ${imgHtml}
-    <div class="prod-top" onclick="${isAgo?'':''}" style="${isAgo?'cursor:not-allowed':''}" ${isAgo?'':'onclick="toggleProd(\''+p.id+'\')"'}>
+    <div class="prod-top" ${clickAttr} style="cursor:${isAgo?'not-allowed':'pointer'}">
       <div class="prod-check"><svg viewBox="0 0 12 12" width="13" height="13"><polyline points="2,6 5,9 10,3" fill="none" stroke="white" stroke-width="2.5"/></svg></div>
       <div class="prod-badge ${catBadge(p.cat)}">${catLabel(p.cat)}</div>
       <div class="prod-name">${p.name}</div>
@@ -563,20 +563,48 @@ function buildConfirm(){
     +`\n\nConfirmo y aguardo datos de pago. Gracias!`;
 }
 function guardarLocal(d){
-  const ps=JSON.parse(localStorage.getItem(PKEY)||'[]');
+  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
   ps.unshift({id:Date.now(),fecha:new Date().toLocaleDateString('es-AR'),hora:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),nombre:d.nombre,tel:d.tel,fechaEntrega:d.fecha,productos:d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name}`).join(', '),total:'$'+d.total.toLocaleString('es-AR'),estado:'p',detalle:`Pack: ${d.pack?d.pack.name:'—'} | Envío: ${d.del?d.del.name:'—'}`});
-  localStorage.setItem(PKEY,JSON.stringify(ps.slice(0,100)));
+  localStorage.setItem('alfamundo_pedidos',JSON.stringify(ps.slice(0,100)));
 }
 async function enviarPedido(){
   const d=buildData();
   const btn=document.getElementById('copy-wa');
   btn.textContent='Enviando...';btn.disabled=true;
   const prodStr=d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name}`).join(' | ');
+  const waText=document.getElementById('wa-msg').textContent;
+
+  // Copiar al portapapeles
+  try{ await navigator.clipboard.writeText(waText); }
+  catch(e){ fbCopy(waText); }
+
+  // Guardar en Sheets + notificar por email
   await Promise.all([
-    new Promise(r=>{const t=document.getElementById('wa-msg').textContent;navigator.clipboard?.writeText(t).then(r).catch(()=>{fbCopy(t);r();})||fbCopy(t)||r();}),
-    postScript({action:'savePedido',pedido:{fecha:new Date().toLocaleDateString('es-AR'),hora:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),nombre:d.nombre,whatsapp:d.tel,email:d.email||'',productos:prodStr,unidades:d.totalU,packaging:d.pack?d.pack.name:'—',envio:d.del?d.del.name:'—',total:'$'+d.total.toLocaleString('es-AR'),fechaEntrega:d.fecha,ocasion:d.ocas||'',restricciones:d.alerg||'',msgTarjeta:d.msgCard||''}}).catch(()=>null),
-    fetch(FORMSPREE,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({nombre:d.nombre,whatsapp:d.tel,total:'$'+d.total.toLocaleString('es-AR'),semana:d.semana,_subject:`Nuevo pedido AlfaMundo — ${d.nombre}`})}).catch(()=>null)
+    postScript({action:'savePedido',pedido:{
+      fecha:new Date().toLocaleDateString('es-AR'),
+      hora:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
+      nombre:d.nombre,whatsapp:d.tel,email:d.email||'',
+      productos:prodStr,unidades:d.totalU,
+      packaging:d.pack?d.pack.name:'—',
+      envio:d.del?d.del.name:'—',
+      total:'$'+d.total.toLocaleString('es-AR'),
+      fechaEntrega:d.fecha,ocasion:d.ocas||'',
+      restricciones:d.alerg||'',msgTarjeta:d.msgCard||''
+    }}).catch(()=>null),
+    fetch(FORMSPREE,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        nombre:d.nombre,whatsapp:d.tel,email:d.email||'',
+        total:'$'+d.total.toLocaleString('es-AR'),
+        semana:d.semana,productos:prodStr,
+        fecha_entrega:d.fecha,packaging:d.pack?d.pack.name:'—',
+        envio:d.del?d.del.name:'—',
+        _subject:`Nuevo pedido AlfaMundo — ${d.nombre}`
+      })
+    }).catch(()=>null)
   ]);
+
   guardarLocal(d);
   const sb=document.getElementById('status-box');
   sb.className='status-box st-ok';sb.textContent='✓ Pedido registrado';sb.style.display='block';
@@ -602,11 +630,10 @@ function goStep(n){
 // ── SEMANA ─────────────────────────────────────────────
 function renderSemana(){
   if(!cfg)return;
-  const load=document.getElementById('semana-loading');
+  document.getElementById('semana-loading').style.display='none';
   const cont=document.getElementById('semana-content');
-  load.style.display='none';cont.style.display='block';
+  cont.style.display='block';
 
-  // Parsear alfajores de la semana desde la cadena separada por comas
   const nombresStr=cfg.week.contenido||'';
   const nombresLista=nombresStr.split(',').map(n=>n.trim()).filter(Boolean);
   const prodsDeSemanana=nombresLista.length>0
@@ -634,7 +661,7 @@ function renderSemana(){
       </div>`).join('');
     html+='</div>';
   } else {
-    html+=`<div class="no-items">No hay alfajores cargados para esta semana.<br>Actualizá la configuración en el Admin.</div>`;
+    html+=`<div class="no-items">No hay alfajores cargados para esta semana.</div>`;
   }
   html+=`<p style="font-size:12px;color:#7B5A3A;text-align:center;margin-top:8px">Mínimo 6 unidades — Armá tu pedido en la primera solapa</p>`;
   cont.innerHTML=html;
@@ -650,11 +677,7 @@ function renderComoComprar(){
     cont.innerHTML=`<div class="no-items">No hay pasos cargados todavía.</div>`;return;
   }
   cont.innerHTML=`<div style="margin-bottom:16px"><div style="font-size:18px;font-weight:700;color:#3B1A08;margin-bottom:4px">¿Cómo comprar?</div><div style="font-size:13px;color:#7B5A3A">Seguí estos pasos simples para hacer tu pedido</div></div>`+
-    cfg.comoComprar.map(p=>`
-    <div class="paso-card">
-      <div class="paso-num">${p.paso}</div>
-      <div class="paso-desc">${p.desc}</div>
-    </div>`).join('');
+    cfg.comoComprar.map(p=>`<div class="paso-card"><div class="paso-num">${p.paso}</div><div class="paso-desc">${p.desc}</div></div>`).join('');
 }
 
 // ── QUIENES SOMOS ──────────────────────────────────────
@@ -670,16 +693,13 @@ function renderNosotros(){
     <div class="qs-titulo">${qs['Nombre del negocio']||'AlfaMundo'}</div>
     <div class="qs-subtitulo">${qs['Ubicación']||'San Fernando, Buenos Aires'}</div>
     ${campos.filter(([k])=>!['Nombre del negocio','Ubicación'].includes(k)).map(([k,v])=>`
-    <div class="qs-field">
-      <div class="qs-label">${k}</div>
-      <div class="qs-val">${v}</div>
-    </div>`).join('')}
+    <div class="qs-field"><div class="qs-label">${k}</div><div class="qs-val">${v}</div></div>`).join('')}
   </div>`;
 }
 
 // ── PEDIDOS ────────────────────────────────────────────
 function renderPedidos(){
-  const ps=JSON.parse(localStorage.getItem(PKEY)||'[]');
+  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
   document.getElementById('ped-count').textContent=`${ps.length} pedido${ps.length!==1?'s':''} registrado${ps.length!==1?'s':''}`;
   const list=document.getElementById('pedidos-list');
   if(!ps.length){list.innerHTML=`<div class="no-items">&#128230; Sin pedidos todavía.</div>`;return;}
@@ -698,12 +718,12 @@ function renderPedidos(){
     </div>`).join('');
 }
 function cambiarEstado(i){
-  const ps=JSON.parse(localStorage.getItem(PKEY)||'[]');
+  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
   ps[i].estado={p:'c',c:'e',e:'p'}[ps[i].estado||'p']||'c';
-  localStorage.setItem(PKEY,JSON.stringify(ps));renderPedidos();
+  localStorage.setItem('alfamundo_pedidos',JSON.stringify(ps));renderPedidos();
 }
 function limpiarPedidos(){
-  if(confirm('¿Eliminar todos los pedidos del historial?')){localStorage.removeItem(PKEY);renderPedidos();}
+  if(confirm('¿Eliminar todos los pedidos del historial?')){localStorage.removeItem('alfamundo_pedidos');renderPedidos();}
 }
 
 // ── TABS ───────────────────────────────────────────────
@@ -802,15 +822,19 @@ async function saveConfig(){
   const st=document.getElementById('sync-st');
   btn.disabled=true;btn.textContent='Guardando...';
   st.style.display='block';st.textContent='⏳ Sincronizando con Google Sheets...';
+
+  // FIX: guardar valores del form sin fallback al valor anterior
+  // (así se puede borrar un campo intencionalmente)
   cfg.week={
-    name:document.getElementById('a-wname').value.trim()||cfg.week.name,
-    theme:document.getElementById('a-wtheme').value.trim()||cfg.week.theme,
-    contenido:document.getElementById('a-wcontenido').value.trim()||cfg.week.contenido,
-    date:document.getElementById('a-wdate').value.trim()||cfg.week.date,
-    badge:document.getElementById('a-wbadge').value.trim()||cfg.week.badge
+    name:      document.getElementById('a-wname').value.trim(),
+    theme:     document.getElementById('a-wtheme').value.trim(),
+    contenido: document.getElementById('a-wcontenido').value.trim(),
+    date:      document.getElementById('a-wdate').value.trim(),
+    badge:     document.getElementById('a-wbadge').value.trim()
   };
   const wn=document.getElementById('a-wanum').value.trim();
   if(wn)localStorage.setItem('alf_wa',wn);
+
   try{
     const r=await postScript({action:'saveConfig',config:cfg});
     if(r&&r.ok){
@@ -839,4 +863,5 @@ init();
 </script>
 </body>
 </html>
+
 
