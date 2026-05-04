@@ -160,10 +160,10 @@ textarea{resize:vertical;min-height:72px}
 <body>
 <div class="header">
   <div class="header-left">
-    <div class="logo">ALFA<br>MUNDO</div>
+    <div class="logo" onclick="pedirClave()" style="cursor:pointer">ALFA<br>MUNDO</div>
     <div><div class="header-title">AlfaMundo</div><div class="header-sub">El mejor alfajor del mundo</div></div>
   </div>
-  <button class="btn-admin" onclick="toggleAdmin()">&#9881;</button>
+  <button class="btn-admin" id="btn-admin-visible" style="display:none" onclick="toggleAdmin()">&#9881;</button>
 </div>
 <div class="tabs">
   <div class="tab on" onclick="showTab('pedido',this)">&#127873; Pedido</div>
@@ -815,6 +815,14 @@ function showTab(t,btn){
 }
 
 // ── ADMIN ──────────────────────────────────────────────
+function pedirClave(){
+  const clave=prompt('Contraseña:');
+  if(clave==='Tomate') toggleAdmin();
+}
+function pedirClave(){
+  const clave=prompt('Contraseña:');
+  if(clave==='Tomate') toggleAdmin();
+}
 async function toggleAdmin(){
   const o=document.getElementById('admin-overlay');
   if(!o.style.display||o.style.display==='none'){
@@ -939,5 +947,3 @@ init();
 </script>
 </body>
 </html>
-
-
