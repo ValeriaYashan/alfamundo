@@ -36,6 +36,21 @@ body{font-family:Arial,sans-serif;background:#FFF8EE;color:#1F2D3D;font-size:16p
 .cart-total{color:#F5C842;font-size:20px;font-weight:700;flex-shrink:0}
 .min-warn{background:#FFF3CD;border:1px solid #F5C842;border-radius:8px;padding:10px 12px;font-size:13px;color:#7B5A3A;margin-bottom:14px;display:none}
 .section-label{font-size:13px;font-weight:700;color:#3B1A08;margin:16px 0 8px;padding:6px 10px;background:#F5EDD8;border-radius:8px;border-left:3px solid #C9972A}
+.caja-semana-card{background:linear-gradient(135deg,#3B1A08 0%,#5D3A1A 100%);border-radius:14px;padding:16px;margin-bottom:16px;position:relative;overflow:hidden}
+.caja-semana-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:#C9972A;border-radius:50%;opacity:.15}
+.cs-badge{display:inline-block;background:#F5C842;color:#3B1A08;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px}
+.cs-titulo{color:#fff;font-size:16px;font-weight:700;margin-bottom:3px}
+.cs-tema{color:#C9A98A;font-size:12px;margin-bottom:8px}
+.cs-prods{color:#E0C9A6;font-size:11px;line-height:1.6;margin-bottom:12px}
+.cs-precio{color:#F5C842;font-size:18px;font-weight:700}
+.cs-precio-sub{color:#C9A98A;font-size:11px;margin-left:4px}
+.cs-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px;flex-wrap:wrap;gap:10px}
+.cs-qty-row{display:flex;align-items:center;gap:10px}
+.cs-qty-btn{width:34px;height:34px;border-radius:50%;border:1.5px solid #C9972A;background:transparent;color:#F5C842;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700}
+.cs-qty-btn:active{background:#5D3A1A}
+.cs-qty-val{font-size:18px;font-weight:700;color:#fff;min-width:24px;text-align:center}
+.cs-qty-label{color:#C9A98A;font-size:12px}
+.cs-skip{color:#C9A98A;font-size:12px;text-decoration:underline;cursor:pointer;background:none;border:none;padding:0}
 .prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
 .prod-card{border:1.5px solid #E0C9A6;border-radius:12px;background:#fff;overflow:hidden}
 .prod-card.sel{border:2.5px solid #C9972A}
@@ -369,7 +384,7 @@ textarea{resize:vertical;min-height:72px}
 const SCRIPT   = 'https://script.google.com/macros/s/AKfycbwg4dI5CnnWjAaeuXkUBWT1T_R5pliGmxUh4gL7QgVTMsVEA8KRgzJTQWniF5isEggE/exec';
 const FORMSPREE= 'https://formspree.io/f/xaqvqazk';
 
-let cfg=null,sel={},packSel=null,delSel=null,curStep=0;
+let cfg=null,sel={},packSel=null,delSel=null,curStep=0,cajaSemanaQty=0;
 
 const catLabel=c=>({premiado:'Premiado CMA',masivo:'Masivo',premium:'Premium',saludable:'Sin TACC'}[c]||c);
 const catBadge=c=>({premiado:'b-p',masivo:'b-m',premium:'b-pr',saludable:'b-s'}[c]||'b-m');
@@ -392,6 +407,48 @@ async function loadConfig(){
 }
 
 // ── RENDER PRODUCTOS ────────────────────────────────────
+function getCajaSemanaPrice(){
+  // Precio fijo si está definido en week.precio, sino suma componentes
+  if(cfg.week.precio && Number(cfg.week.precio)>0) return Number(cfg.week.precio);
+  const nombresLista=(cfg.week.contenido||'').split(',').map(n=>n.trim()).filter(Boolean);
+  const prods=nombresLista.map(nombre=>cfg.products.find(p=>p.name.toLowerCase()===nombre.toLowerCase())).filter(Boolean);
+  if(!prods.length) return 0;
+  // Toma los primeros 6
+  return prods.slice(0,6).reduce((s,p)=>s+p.price,0);
+}
+
+function renderCajaSemana(){
+  const w=cfg.week;
+  if(!w||!w.name) return '';
+  const nombresLista=(w.contenido||'').split(',').map(n=>n.trim()).filter(Boolean);
+  if(!nombresLista.length) return '';
+  const precio=getCajaSemanaPrice();
+  const qty=cajaSemanaQty;
+  return `<div class="caja-semana-card">
+    <div class="cs-badge">&#127942; Caja de la Semana</div>
+    <div class="cs-titulo">${w.name}</div>
+    ${w.theme?`<div class="cs-tema">${w.theme}</div>`:''}
+    <div class="cs-prods">&#127863; ${nombresLista.join(' &nbsp;·&nbsp; ')}</div>
+    <div class="cs-bottom">
+      <div>
+        <div><span class="cs-precio">${precio>0?'$'+precio.toLocaleString('es-AR'):'Ver precio'}</span><span class="cs-precio-sub">/ caja · 6 u.</span></div>
+        ${qty>0?`<div style="color:#F5C842;font-size:11px;margin-top:4px">${qty} caja${qty>1?'s':''} = ${qty*6} unidades = $${(precio*qty).toLocaleString('es-AR')}</div>`:'<div style="color:#C9A98A;font-size:11px;margin-top:4px">Podés sumar alfajores sueltos abajo</div>'}
+      </div>
+      <div class="cs-qty-row">
+        <div class="cs-qty-label">Cajas</div>
+        <button class="cs-qty-btn" onclick="chgCajaSemana(-1)">&#8722;</button>
+        <span class="cs-qty-val">${qty}</span>
+        <button class="cs-qty-btn" onclick="chgCajaSemana(1)">+</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function chgCajaSemana(d){
+  cajaSemanaQty=Math.max(0,cajaSemanaQty+d);
+  renderProds();
+}
+
 function renderProds(){
   if(!cfg)return;
   document.getElementById('prod-loading').style.display='none';
@@ -401,9 +458,9 @@ function renderProds(){
   const stock  =cfg.products.filter(p=>p.stock==='stock');
   const agotado=cfg.products.filter(p=>p.stock==='agotado');
 
-  let html='';
+  let html=renderCajaSemana();
   if(stock.length){
-    html+=`<div class="section-label">&#9989; Disponibles (${stock.length})</div><div class="prod-grid">`;
+    html+=`<div class="section-label">&#9989; Disponibles — elegí unidades sueltas (${stock.length})</div><div class="prod-grid">`;
     html+=stock.map(p=>prodCard(p)).join('');
     html+='</div>';
   }
@@ -455,9 +512,15 @@ function chgQty(id,d){
   renderProds();
 }
 function updateCart(){
-  const totalU=Object.values(sel).reduce((s,v)=>s+v,0);
-  const sub=Object.entries(sel).reduce((s,[id,qty])=>{const p=cfg.products.find(x=>x.id===id);return s+(p?p.price*qty:0);},0);
-  const names=Object.keys(sel).map(id=>cfg.products.find(x=>x.id===id)?.name).filter(Boolean);
+  const sueltasU=Object.values(sel).reduce((s,v)=>s+v,0);
+  const cajasU=cajaSemanaQty*6;
+  const totalU=sueltasU+cajasU;
+  const subSueltas=Object.entries(sel).reduce((s,[id,qty])=>{const p=cfg.products.find(x=>x.id===id);return s+(p?p.price*qty:0);},0);
+  const subCajas=cajaSemanaQty>0?getCajaSemanaPrice()*cajaSemanaQty:0;
+  const sub=subSueltas+subCajas;
+  const names=[];
+  if(cajaSemanaQty>0) names.push(`${cajaSemanaQty} Caja${cajaSemanaQty>1?'s':''} Semana`);
+  Object.keys(sel).forEach(id=>{const p=cfg.products.find(x=>x.id===id);if(p)names.push(p.name);});
   document.getElementById('cart-u').textContent=totalU;
   document.getElementById('cart-txt').innerHTML=names.length?`<span style="color:#C9A98A;font-size:11px">${names.slice(0,3).join(', ')}${names.length>3?' +más':''}</span>`:'';
   document.getElementById('cart-sub').textContent='$'+sub.toLocaleString('es-AR');
@@ -477,11 +540,15 @@ function renderPacking(){
 }
 function selPack(id){packSel=id;renderPacking();document.getElementById('btn-s1').disabled=false;}
 function renderTotalS1(){
-  const sub=Object.entries(sel).reduce((s,[id,qty])=>{const p=cfg.products.find(x=>x.id===id);return s+(p?p.price*qty:0);},0);
+  const subSueltas=Object.entries(sel).reduce((s,[id,qty])=>{const p=cfg.products.find(x=>x.id===id);return s+(p?p.price*qty:0);},0);
+  const cajaPrecio=cajaSemanaQty>0?getCajaSemanaPrice():0;
+  const subCajas=cajaPrecio*cajaSemanaQty;
+  const sub=subSueltas+subCajas;
   const pack=packSel?cfg.packaging.find(x=>x.id===packSel):null;
   const packP=pack?pack.price:0;
   document.getElementById('total-s1').innerHTML=`
-    <div class="total-row"><span>Subtotal alfajores</span><span>$${sub.toLocaleString('es-AR')}</span></div>
+    ${cajaSemanaQty>0?`<div class="total-row"><span>Caja Semana x${cajaSemanaQty} (${cajaSemanaQty*6} u.)</span><span>$${subCajas.toLocaleString('es-AR')}</span></div>`:''}
+    ${subSueltas>0?`<div class="total-row"><span>Sueltos</span><span>$${subSueltas.toLocaleString('es-AR')}</span></div>`:''}
     <div class="total-row"><span>Packaging${pack?' — '+pack.name:''}</span><span>${packP>0?'+$'+packP.toLocaleString('es-AR'):'Incluido'}</span></div>
     <div class="total-row main"><span>TOTAL (sin envío)</span><span>$${(sub+packP).toLocaleString('es-AR')}</span></div>`;
 }
@@ -514,10 +581,18 @@ function chkS2(){
 // ── CONFIRM ────────────────────────────────────────────
 function buildData(){
   const selProds=Object.entries(sel).map(([id,qty])=>({...cfg.products.find(x=>x.id===id),qty})).filter(p=>p.name);
-  const sub=selProds.reduce((s,p)=>s+p.price*p.qty,0);
+  const subSueltas=selProds.reduce((s,p)=>s+p.price*p.qty,0);
+  const cajaPrecio=cajaSemanaQty>0?getCajaSemanaPrice():0;
+  const subCajas=cajaPrecio*cajaSemanaQty;
+  const sub=subSueltas+subCajas;
   const pack=packSel?cfg.packaging.find(x=>x.id===packSel):null;
   const del=delSel?cfg.delivery.find(x=>x.id===delSel):null;
   const packP=pack?pack.price:0,delP=del?del.price:0;
+  const totalU=(Object.values(sel).reduce((s,v)=>s+v,0))+(cajaSemanaQty*6);
+  // Prepend caja semana como item virtual si aplica
+  const allProds=cajaSemanaQty>0
+    ?[{id:'__caja',name:`Caja Semana — ${cfg.week.name}`,price:cajaPrecio,qty:cajaSemanaQty,cat:'semana'},...selProds]
+    :selProds;
   return{
     nombre:document.getElementById('f-nombre').value.trim(),
     tel:document.getElementById('f-tel').value.trim(),
@@ -527,10 +602,11 @@ function buildData(){
     alerg:document.getElementById('f-alerg').value.trim(),
     msgCard:document.getElementById('f-msg').value.trim(),
     dir:document.getElementById('f-dir').value.trim(),
-    selProds,sub,pack,del,packP,delP,
+    selProds:allProds,sub,pack,del,packP,delP,
     total:sub+packP+delP,
-    totalU:Object.values(sel).reduce((s,v)=>s+v,0),
-    semana:cfg.week.name
+    totalU,
+    semana:cfg.week.name,
+    cajaSemanaQty,cajaPrecio
   };
 }
 function buildConfirm(){
@@ -863,5 +939,4 @@ init();
 </script>
 </body>
 </html>
-
 
