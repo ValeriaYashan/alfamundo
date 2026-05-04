@@ -125,6 +125,34 @@ textarea{resize:vertical;min-height:72px}
 .qs-label{font-size:11px;font-weight:700;color:#7B5A3A;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .qs-val{font-size:14px;color:#1F2D3D;line-height:1.6}
 .pedido-card{background:#fff;border:1px solid #E0C9A6;border-radius:12px;padding:14px;margin-bottom:10px}
+.confirm-success{display:none;text-align:center;padding:30px 20px;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cs-num{font-size:13px;color:#7B5A3A;margin-bottom:8px}
+.cs-numval{font-size:28px;font-weight:700;color:#3B1A08;letter-spacing:2px;margin-bottom:16px}
+.cs-icon{font-size:56px;margin-bottom:12px}
+.cs-msg{font-size:16px;font-weight:700;color:#2E7D32;margin-bottom:8px}
+.cs-sub{font-size:13px;color:#7B5A3A;line-height:1.6;margin-bottom:20px}
+.cs-wa-btn{display:inline-block;padding:14px 28px;background:#25D366;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;width:100%}
+.cs-new-btn{display:inline-block;padding:12px 28px;background:#3B1A08;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%}
+.filtros-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.filtro-btn{padding:6px 14px;border:1.5px solid #E0C9A6;border-radius:20px;background:#fff;color:#7B5A3A;font-size:12px;font-weight:700;cursor:pointer}
+.filtro-btn.on{background:#3B1A08;color:#F5C842;border-color:#3B1A08}
+.filtro-search{flex:1;min-width:140px;padding:7px 12px;border:1.5px solid #E0C9A6;border-radius:20px;font-size:13px;background:#fff;color:#1F2D3D}
+.ped-num{font-size:10px;font-weight:700;color:#C9972A;letter-spacing:1px;margin-bottom:3px}
+.confirm-success{display:none;text-align:center;padding:30px 20px;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.cs-num{font-size:13px;color:#7B5A3A;margin-bottom:8px}
+.cs-numval{font-size:28px;font-weight:700;color:#3B1A08;letter-spacing:2px;margin-bottom:16px}
+.cs-icon{font-size:56px;margin-bottom:12px}
+.cs-msg{font-size:16px;font-weight:700;color:#2E7D32;margin-bottom:8px}
+.cs-sub{font-size:13px;color:#7B5A3A;line-height:1.6;margin-bottom:20px}
+.cs-wa-btn{display:inline-block;padding:14px 28px;background:#25D366;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;width:100%}
+.cs-new-btn{display:inline-block;padding:12px 28px;background:#3B1A08;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%}
+.filtros-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.filtro-btn{padding:6px 14px;border:1.5px solid #E0C9A6;border-radius:20px;background:#fff;color:#7B5A3A;font-size:12px;font-weight:700;cursor:pointer}
+.filtro-btn.on{background:#3B1A08;color:#F5C842;border-color:#3B1A08}
+.filtro-search{flex:1;min-width:140px;padding:7px 12px;border:1.5px solid #E0C9A6;border-radius:20px;font-size:13px;background:#fff;color:#1F2D3D}
+.ped-num{font-size:10px;font-weight:700;color:#C9972A;letter-spacing:1px;margin-bottom:3px}
 .pedido-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .pedido-nombre{font-size:14px;font-weight:700;color:#3B1A08}
 .pedido-fecha{font-size:11px;color:#7B5A3A}
@@ -252,19 +280,31 @@ textarea{resize:vertical;min-height:72px}
     </div>
   </div>
   <div class="step" id="s3">
-    <div class="step-hdr"><div class="step-num" style="background:#C9972A;font-size:18px">&#10003;</div>
-      <div><div class="step-title">Confirmá tu pedido</div><div class="step-sub">Revisá y envianos el pedido por WhatsApp</div></div>
+    <!-- Vista resumen -->
+    <div id="s3-resumen">
+      <div class="step-hdr"><div class="step-num" style="background:#C9972A;font-size:18px">&#10003;</div>
+        <div><div class="step-title">Confirmá tu pedido</div><div class="step-sub">Revisá y envianos el pedido por WhatsApp</div></div>
+      </div>
+      <div class="confirm-card" id="confirm-prods"></div>
+      <div class="confirm-card" id="confirm-datos"></div>
+      <div class="wa-box" id="wa-box" style="display:none"><div class="wa-title">&#128172; Mensaje listo para WhatsApp</div>
+        <div class="wa-msg" id="wa-msg"></div></div>
+      <button class="wa-copy" id="copy-wa" onclick="enviarPedido()">&#128203; Copiar y abrir WhatsApp</button>
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goStep(0)">&#8592; Cambiar alfajores</button>
+        <button class="btn-back" onclick="goStep(2)">&#8592; Cambiar datos</button>
+      </div>
     </div>
-    <div class="confirm-card" id="confirm-prods"></div>
-    <div class="confirm-card" id="confirm-datos"></div>
-    <div class="status-box" id="status-box"></div>
-
-    <div class="wa-box" id="wa-box" style="display:none"><div class="wa-title">&#128172; Mensaje listo para WhatsApp</div>
-      <div class="wa-msg" id="wa-msg"></div></div>
-    <button class="wa-copy" id="copy-wa" onclick="enviarPedido()">&#128203; Copiar y abrir WhatsApp</button>
-    <div class="nav-btns">
-      <button class="btn-back" onclick="goStep(0)">&#8592; Cambiar alfajores</button>
-      <button class="btn-back" onclick="goStep(2)">&#8592; Cambiar datos</button>
+    <!-- Vista confirmación exitosa -->
+    <div class="confirm-success" id="s3-exito">
+      <div class="cs-icon">🎉</div>
+      <div class="cs-num">Número de pedido</div>
+      <div class="cs-numval" id="pedido-num">AM-</div>
+      <div class="cs-msg">¡Muchas gracias por tu compra!</div>
+      <div class="cs-sub">En breve serás contactado para coordinar la entrega y los datos de pago.</div>
+      <div class="status-box" id="status-box" style="display:none"></div>
+      <button class="cs-wa-btn" id="copy-wa-2" onclick="abrirWA()">&#128172; Abrir WhatsApp</button>
+      <button class="cs-new-btn" onclick="nuevoPedido()">+ Hacer otro pedido</button>
     </div>
   </div>
 </div>
@@ -283,11 +323,21 @@ textarea{resize:vertical;min-height:72px}
 
 <!-- PEDIDOS -->
 <div class="panel" id="tab-recibidos">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
     <div><div style="font-size:17px;font-weight:700;color:#3B1A08">Pedidos recibidos</div>
     <div style="font-size:12px;color:#7B5A3A" id="ped-count"></div></div>
     <button onclick="limpiarPedidos()" style="padding:7px 12px;border:1px solid #E0C9A6;border-radius:8px;background:#fff;color:#C62828;font-size:12px;cursor:pointer">Limpiar</button>
   </div>
+  <div class="filtros-bar">
+    <button class="filtro-btn on" id="f-todos" onclick="setFiltro('todos')">Todos</button>
+    <button class="filtro-btn" id="f-hoy" onclick="setFiltro('hoy')">Hoy</button>
+    <button class="filtro-btn" id="f-semana" onclick="setFiltro('semana')">Esta semana</button>
+    <button class="filtro-btn" id="f-p" onclick="setFiltro('p')">⏳ Pendiente</button>
+    <button class="filtro-btn" id="f-c" onclick="setFiltro('c')">✅ Confirmado</button>
+    <button class="filtro-btn" id="f-e" onclick="setFiltro('e')">📦 Entregado</button>
+  </div>
+  <input class="filtro-search" id="filtro-nombre" type="text" placeholder="🔍 Buscar por nombre..." oninput="renderPedidos()">
+  <div style="margin-bottom:10px"></div>
   <div id="pedidos-list"></div>
 </div>
 
@@ -644,10 +694,37 @@ function buildConfirm(){
     (d.msgCard?`\nMensaje tarjeta: "${d.msgCard}"`:'')
     +`\n\nConfirmo y aguardo datos de pago. Gracias!`;
 }
-function guardarLocal(d){
+function generarNroPedido(){
+  const now=new Date();
+  const yy=now.getFullYear();
+  const mm=String(now.getMonth()+1).padStart(2,'0');
+  const dd=String(now.getDate()).padStart(2,'0');
   const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
-  ps.unshift({id:Date.now(),fecha:new Date().toLocaleDateString('es-AR'),hora:new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),nombre:d.nombre,tel:d.tel,fechaEntrega:d.fecha,productos:d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name}`).join(', '),total:'$'+d.total.toLocaleString('es-AR'),estado:'p',detalle:`Pack: ${d.pack?d.pack.name:'—'} | Envío: ${d.del?d.del.name:'—'}`});
-  localStorage.setItem('alfamundo_pedidos',JSON.stringify(ps.slice(0,100)));
+  // Contar pedidos del mismo día
+  const prefijo=`AM-${yy}${mm}${dd}`;
+  const delDia=ps.filter(p=>p.nro&&p.nro.startsWith(prefijo)).length;
+  const seq=String(delDia+1).padStart(3,'0');
+  return `${prefijo}-${seq}`;
+}
+function guardarLocal(d){
+  const nro=generarNroPedido();
+  const now=new Date();
+  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  ps.unshift({
+    id:Date.now(),
+    nro,
+    fecha:now.toLocaleDateString('es-AR'),
+    fechaISO:now.toISOString().slice(0,10),
+    hora:now.toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}),
+    nombre:d.nombre,tel:d.tel,
+    fechaEntrega:d.fecha,
+    productos:d.selProds.map(p=>`${p.qty}x ${p.name}`).join(', '),
+    total:'$'+d.total.toLocaleString('es-AR'),
+    estado:'p',
+    detalle:`Pack: ${d.pack?d.pack.name:'—'} | Envío: ${d.del?d.del.name:'—'}`
+  });
+  localStorage.setItem('alfamundo_pedidos',JSON.stringify(ps.slice(0,200)));
+  return nro;
 }
 async function enviarPedido(){
   const d=buildData();
@@ -687,16 +764,31 @@ async function enviarPedido(){
     }).catch(()=>null)
   ]);
 
-  guardarLocal(d);
-  const sb=document.getElementById('status-box');
-  document.getElementById('wa-box').style.display='block';
-  sb.className='status-box st-ok';
-  sb.innerHTML='<div style="font-size:16px;font-weight:700;margin-bottom:6px">🎉 ¡Muchas gracias por tu compra!</div><div style="font-size:13px">En breve serás contactado para coordinar la entrega.</div>';
-  sb.style.cssText='display:block;text-align:center;padding:18px 16px;border-radius:12px;background:#E8F5E9;border:1px solid #A8D887;color:#2E7D32;margin-bottom:10px';
-  btn.textContent='✓ Copiado! Abrí WhatsApp y pegá';btn.classList.add('ok');btn.disabled=false;
-  const num=localStorage.getItem('alf_wa')||'';
-  if(num&&num!=='5491100000000')setTimeout(()=>window.open('https://wa.me/'+num,'_blank'),500);
-  setTimeout(()=>{btn.textContent='Copiar y abrir WhatsApp';btn.classList.remove('ok');},4000);
+  const nro=guardarLocal(d);
+  // Mostrar pantalla de éxito
+  document.getElementById('s3-resumen').style.display='none';
+  const exito=document.getElementById('s3-exito');
+  exito.style.display='block';
+  document.getElementById('pedido-num').textContent=nro;
+  window.lastWANum=localStorage.getItem('alf_wa')||'';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function abrirWA(){
+  const num=window.lastWANum||'';
+  if(num&&num!=='5491100000000') window.open('https://wa.me/'+num,'_blank');
+}
+function nuevoPedido(){
+  sel={};packSel=null;delSel=null;curStep=0;cajaSemanaQty=0;
+  document.getElementById('s3-exito').style.display='none';
+  document.getElementById('s3-resumen').style.display='block';
+  document.getElementById('wa-box').style.display='none';
+  // Limpiar formulario
+  ['f-nombre','f-tel','f-email','f-dir','f-alerg','f-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('f-fecha').value='';
+  document.getElementById('f-ocas').value='';
+  delSel=null;
+  goStep(0);
+  renderProds();
 }
 function fbCopy(t){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;opacity:0';document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(ta);}
 
@@ -783,24 +875,49 @@ function renderNosotros(){
 }
 
 // ── PEDIDOS ────────────────────────────────────────────
+let filtroActivo='todos';
+function setFiltro(f){
+  filtroActivo=f;
+  document.querySelectorAll('.filtro-btn').forEach(b=>b.classList.remove('on'));
+  const btn=document.getElementById('f-'+f);
+  if(btn)btn.classList.add('on');
+  renderPedidos();
+}
 function renderPedidos(){
-  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
-  document.getElementById('ped-count').textContent=`${ps.length} pedido${ps.length!==1?'s':''} registrado${ps.length!==1?'s':''}`;
+  let ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  const total=ps.length;
+  // Filtro por fecha
+  const hoy=new Date().toISOString().slice(0,10);
+  const semanaAtras=new Date(Date.now()-7*24*60*60*1000).toISOString().slice(0,10);
+  if(filtroActivo==='hoy') ps=ps.filter(p=>p.fechaISO===hoy);
+  else if(filtroActivo==='semana') ps=ps.filter(p=>p.fechaISO>=semanaAtras);
+  else if(['p','c','e'].includes(filtroActivo)) ps=ps.filter(p=>(p.estado||'p')===filtroActivo);
+  // Filtro por nombre
+  const busq=(document.getElementById('filtro-nombre')?.value||'').toLowerCase().trim();
+  if(busq) ps=ps.filter(p=>p.nombre.toLowerCase().includes(busq));
+  document.getElementById('ped-count').textContent=`${ps.length} de ${total} pedido${total!==1?'s':''}`;
   const list=document.getElementById('pedidos-list');
-  if(!ps.length){list.innerHTML=`<div class="no-items">&#128230; Sin pedidos todavía.</div>`;return;}
+  if(!ps.length){list.innerHTML=`<div class="no-items">&#128230; Sin pedidos para este filtro.</div>`;return;}
   const ec={p:'⏳ Pendiente',c:'✅ Confirmado',e:'📦 Entregado'};
   const cc={p:'est-p',c:'est-c',e:'est-e'};
-  list.innerHTML=ps.map((p,i)=>`
-    <div class="pedido-card">
+  // Índice real en el array completo para cambiarEstado
+  const psAll=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  list.innerHTML=ps.map(p=>{
+    const i=psAll.findIndex(x=>x.id===p.id);
+    return `<div class="pedido-card">
       <div class="pedido-hdr">
-        <div><div class="pedido-nombre">${p.nombre}</div>
-        <div class="pedido-fecha">${p.fecha} ${p.hora} — Entrega: ${p.fechaEntrega}</div></div>
+        <div>
+          ${p.nro?`<div class="ped-num">${p.nro}</div>`:''}
+          <div class="pedido-nombre">${p.nombre}</div>
+          <div class="pedido-fecha">${p.fecha} ${p.hora} — Entrega: ${p.fechaEntrega}</div>
+        </div>
         <div class="pedido-total">${p.total}</div>
       </div>
       <div class="pedido-detalle">${p.productos}<br><span style="color:#C9A98A">${p.detalle}</span></div>
-      <span class="est-badge ${cc[p.estado]||'est-p'}" onclick="cambiarEstado(${i})">${ec[p.estado]||'⏳ Pendiente'}</span>
+      <span class="est-badge ${cc[p.estado||'p']}" onclick="cambiarEstado(${i})">${ec[p.estado||'p']}</span>
       <span style="font-size:11px;color:#7B5A3A;margin-left:8px">WA: ${p.tel}</span>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 function cambiarEstado(i){
   const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
