@@ -183,7 +183,7 @@ textarea{resize:vertical;min-height:72px}
       <div><div class="step-title">Elegí tus alfajores</div>
       <div class="step-sub">Elegí la Caja Semana y/o sueltos. Mínimo 6 unidades en total.</div></div>
     </div>
-    <div class="cart-bar">
+    <div class="cart-bar" id="cart-bar-el">
       <div><div class="cart-info">Unidades: <span id="cart-u">0</span> / mín. 6</div>
       <div class="cart-info" id="cart-txt"></div></div>
       <div class="cart-total" id="cart-sub">$0</div>
@@ -192,7 +192,7 @@ textarea{resize:vertical;min-height:72px}
     <div id="prod-loading" class="spin-box"><div class="spin"></div><p>Cargando alfajores...</p></div>
     <div id="prod-container" style="display:none"></div>
     <div class="nav-btns">
-      <button class="btn-next" id="btn-s0" onclick="goStep(1)" disabled>Elegir packaging &#8594;</button>
+      <button class="btn-next" id="btn-s0" onclick="goStep(1)" disabled>Elegir presentación &#8594;</button>
     </div>
   </div>
   <div class="step" id="s1">
@@ -216,8 +216,14 @@ textarea{resize:vertical;min-height:72px}
       <div class="form-group"><label class="flabel">WhatsApp <span>*</span></label>
         <input type="tel" id="f-tel" placeholder="11 1234-5678" oninput="chkS2()" autocomplete="tel"></div>
     </div>
-    <div class="form-group"><label class="flabel">Email (para recibir confirmación)</label>
-      <input type="email" id="f-email" placeholder="tucorreo@gmail.com" autocomplete="email"></div>
+    <div class="form-group">
+      <div onclick="toggleEmail()" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;color:#7B5A3A;font-weight:700;margin-bottom:6px">
+        <span id="email-toggle-icon">&#43;</span> ¿Querés recibir confirmación por email?
+      </div>
+      <div id="email-field" style="display:none">
+        <input type="email" id="f-email" placeholder="tucorreo@gmail.com" autocomplete="email">
+      </div>
+    </div>
     <div class="form-group"><label class="flabel">Modo de entrega <span>*</span></label>
       <div class="del-grid" id="del-grid"></div></div>
     <div class="form-group" id="addr-group" style="display:none">
@@ -233,9 +239,12 @@ textarea{resize:vertical;min-height:72px}
         <option>Evento o reunión</option><option>Baby shower</option>
         <option>Casamiento o festejo</option>
       </select></div>
+    <div style="font-size:13px;font-weight:700;color:#7B5A3A;margin:4px 0 10px;padding:8px 12px;background:#F5EDD8;border-radius:8px;border-left:3px solid #C9972A">
+      &#127873; Datos del regalo (opcional)
+    </div>
     <div class="form-group"><label class="flabel">Restricciones o alergias</label>
       <input type="text" id="f-alerg" placeholder="Sin maní, sin gluten..."></div>
-    <div class="form-group"><label class="flabel">Mensaje para la tarjeta (opcional)</label>
+    <div class="form-group"><label class="flabel">Mensaje para la tarjeta</label>
       <textarea id="f-msg" placeholder="Feliz cumple! Con todo mi cariño."></textarea></div>
     <div class="nav-btns">
       <button class="btn-back" onclick="goStep(1)">&#8592; Volver</button>
@@ -243,17 +252,14 @@ textarea{resize:vertical;min-height:72px}
     </div>
   </div>
   <div class="step" id="s3">
-    <div class="step-hdr"><div class="step-num">4</div>
+    <div class="step-hdr"><div class="step-num" style="background:#C9972A;font-size:18px">&#10003;</div>
       <div><div class="step-title">Confirmá tu pedido</div><div class="step-sub">Revisá y envianos el pedido por WhatsApp</div></div>
     </div>
     <div class="confirm-card" id="confirm-prods"></div>
     <div class="confirm-card" id="confirm-datos"></div>
     <div class="status-box" id="status-box"></div>
-    <div class="instruc"><strong>Cómo confirmar:</strong><br>
-      1. Tocá el botón verde — copia el mensaje y abre WhatsApp<br>
-      2. Pegá el mensaje y envialo<br>
-      3. Te confirmamos y te pasamos los datos de pago</div>
-    <div class="wa-box"><div class="wa-title">&#128172; Mensaje listo para WhatsApp</div>
+
+    <div class="wa-box" id="wa-box" style="display:none"><div class="wa-title">&#128172; Mensaje listo para WhatsApp</div>
       <div class="wa-msg" id="wa-msg"></div></div>
     <button class="wa-copy" id="copy-wa" onclick="enviarPedido()">&#128203; Copiar y abrir WhatsApp</button>
     <div class="nav-btns">
@@ -519,6 +525,9 @@ function updateCart(){
   Object.keys(sel).forEach(id=>{const p=cfg.products.find(x=>x.id===id);if(p)names.push(p.name);});
   document.getElementById('cart-u').textContent=totalU;
   document.getElementById('cart-txt').innerHTML=names.length?`<span style="color:#C9A98A;font-size:11px">${names.slice(0,3).join(', ')}${names.length>3?' +más':''}</span>`:'';
+  // Feedback dorado al alcanzar mínimo
+  const bar=document.getElementById('cart-bar-el');
+  if(bar) bar.style.background=totalU>=6?'linear-gradient(90deg,#5D3A1A,#3B1A08)':'#3B1A08';
   document.getElementById('cart-sub').textContent='$'+sub.toLocaleString('es-AR');
   const ok=totalU>=6;
   document.getElementById('btn-s0').disabled=!ok;
@@ -606,6 +615,7 @@ function buildData(){
   };
 }
 function buildConfirm(){
+  document.getElementById('wa-box').style.display='none';
   const d=buildData();
   document.getElementById('confirm-prods').innerHTML=
     `<div class="confirm-title">Alfajores (${d.totalU} unidades)</div>`+
@@ -679,6 +689,7 @@ async function enviarPedido(){
 
   guardarLocal(d);
   const sb=document.getElementById('status-box');
+  document.getElementById('wa-box').style.display='block';
   sb.className='status-box st-ok';
   sb.innerHTML='<div style="font-size:16px;font-weight:700;margin-bottom:6px">🎉 ¡Muchas gracias por tu compra!</div><div style="font-size:13px">En breve serás contactado para coordinar la entrega.</div>';
   sb.style.cssText='display:block;text-align:center;padding:18px 16px;border-radius:12px;background:#E8F5E9;border:1px solid #A8D887;color:#2E7D32;margin-bottom:10px';
@@ -932,6 +943,12 @@ async function saveConfig(){
 }
 
 // ── INIT ───────────────────────────────────────────────
+function toggleEmail(){
+  const field=document.getElementById('email-field');
+  const icon=document.getElementById('email-toggle-icon');
+  if(field.style.display==='none'){field.style.display='block';icon.textContent='−';}
+  else{field.style.display='none';icon.textContent='+';}
+}
 async function init(){
   const ok=await loadConfig();
   if(ok){renderProds();renderSemana();}
