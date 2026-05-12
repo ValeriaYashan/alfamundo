@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
-<title>AlfaMundo — Pedidos de Alfajores</title>
+<title>AlfaCart — Pedidos de Alfajores</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#FFF8EE;color:#1F2D3D;font-size:16px;-webkit-text-size-adjust:100%}
@@ -139,20 +139,6 @@ textarea{resize:vertical;min-height:72px}
 .filtro-btn.on{background:#3B1A08;color:#F5C842;border-color:#3B1A08}
 .filtro-search{flex:1;min-width:140px;padding:7px 12px;border:1.5px solid #E0C9A6;border-radius:20px;font-size:13px;background:#fff;color:#1F2D3D}
 .ped-num{font-size:10px;font-weight:700;color:#C9972A;letter-spacing:1px;margin-bottom:3px}
-.confirm-success{display:none;text-align:center;padding:30px 20px;animation:fadeIn .4s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.cs-num{font-size:13px;color:#7B5A3A;margin-bottom:8px}
-.cs-numval{font-size:28px;font-weight:700;color:#3B1A08;letter-spacing:2px;margin-bottom:16px}
-.cs-icon{font-size:56px;margin-bottom:12px}
-.cs-msg{font-size:16px;font-weight:700;color:#2E7D32;margin-bottom:8px}
-.cs-sub{font-size:13px;color:#7B5A3A;line-height:1.6;margin-bottom:20px}
-.cs-wa-btn{display:inline-block;padding:14px 28px;background:#25D366;color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-bottom:10px;width:100%}
-.cs-new-btn{display:inline-block;padding:12px 28px;background:#3B1A08;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;width:100%}
-.filtros-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-.filtro-btn{padding:6px 14px;border:1.5px solid #E0C9A6;border-radius:20px;background:#fff;color:#7B5A3A;font-size:12px;font-weight:700;cursor:pointer}
-.filtro-btn.on{background:#3B1A08;color:#F5C842;border-color:#3B1A08}
-.filtro-search{flex:1;min-width:140px;padding:7px 12px;border:1.5px solid #E0C9A6;border-radius:20px;font-size:13px;background:#fff;color:#1F2D3D}
-.ped-num{font-size:10px;font-weight:700;color:#C9972A;letter-spacing:1px;margin-bottom:3px}
 .pedido-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
 .pedido-nombre{font-size:14px;font-weight:700;color:#3B1A08}
 .pedido-fecha{font-size:11px;color:#7B5A3A}
@@ -188,8 +174,8 @@ textarea{resize:vertical;min-height:72px}
 <body>
 <div class="header">
   <div class="header-left">
-    <div class="logo" onclick="pedirClave()" style="cursor:pointer">ALFA<br>MUNDO</div>
-    <div><div class="header-title">AlfaMundo</div><div class="header-sub">El mejor alfajor del mundo</div></div>
+    <div class="logo" onclick="pedirClave()" style="cursor:pointer">ALFA<br>CART</div>
+    <div><div class="header-title">AlfaCart</div><div class="header-sub">El mejor alfajor del mundo</div></div>
   </div>
   <button class="btn-admin" id="btn-admin-visible" style="display:none" onclick="toggleAdmin()">&#9881;</button>
 </div>
@@ -280,7 +266,6 @@ textarea{resize:vertical;min-height:72px}
     </div>
   </div>
   <div class="step" id="s3">
-    <!-- Vista resumen -->
     <div id="s3-resumen">
       <div class="step-hdr"><div class="step-num" style="background:#C9972A;font-size:18px">&#10003;</div>
         <div><div class="step-title">Confirmá tu pedido</div><div class="step-sub">Revisá y envianos el pedido por WhatsApp</div></div>
@@ -295,11 +280,10 @@ textarea{resize:vertical;min-height:72px}
         <button class="btn-back" onclick="goStep(2)">&#8592; Cambiar datos</button>
       </div>
     </div>
-    <!-- Vista confirmación exitosa -->
     <div class="confirm-success" id="s3-exito">
       <div class="cs-icon">🎉</div>
       <div class="cs-num">Número de pedido</div>
-      <div class="cs-numval" id="pedido-num">AM-</div>
+      <div class="cs-numval" id="pedido-num">AC-</div>
       <div class="cs-msg">¡Muchas gracias por tu compra!</div>
       <div class="cs-sub">En breve serás contactado para coordinar la entrega y los datos de pago.</div>
       <div class="status-box" id="status-box" style="display:none"></div>
@@ -428,11 +412,10 @@ textarea{resize:vertical;min-height:72px}
   </div>
 </div>
 
-<div class="footer">AlfaMundo &mdash; San Fernando, Buenos Aires &mdash; El mejor alfajor del mundo</div>
+<div class="footer">AlfaCart &mdash; San Fernando, Buenos Aires &mdash; El mejor alfajor del mundo</div>
 
 <script>
 // ── CONFIGURACIÓN ──────────────────────────────────────
-// Reemplazá estas dos URLs con las tuyas:
 const SCRIPT   = 'https://script.google.com/macros/s/AKfycbwg4dI5CnnWjAaeuXkUBWT1T_R5pliGmxUh4gL7QgVTMsVEA8KRgzJTQWniF5isEggE/exec';
 const FORMSPREE= 'https://formspree.io/f/xaqvqazk';
 
@@ -460,12 +443,10 @@ async function loadConfig(){
 
 // ── RENDER PRODUCTOS ────────────────────────────────────
 function getCajaSemanaPrice(){
-  // Precio fijo si está definido en week.precio, sino suma componentes
   if(cfg.week.precio && Number(cfg.week.precio)>0) return Number(cfg.week.precio);
   const nombresLista=(cfg.week.contenido||'').split(',').map(n=>n.trim()).filter(Boolean);
   const prods=nombresLista.map(nombre=>cfg.products.find(p=>p.name.toLowerCase()===nombre.toLowerCase())).filter(Boolean);
   if(!prods.length) return 0;
-  // Toma los primeros 6
   return prods.slice(0,6).reduce((s,p)=>s+p.price,0);
 }
 
@@ -506,10 +487,8 @@ function renderProds(){
   document.getElementById('prod-loading').style.display='none';
   const cont=document.getElementById('prod-container');
   cont.style.display='block';
-
   const stock  =cfg.products.filter(p=>p.stock==='stock');
   const agotado=cfg.products.filter(p=>p.stock==='agotado');
-
   let html=renderCajaSemana();
   if(stock.length){
     html+=`<div class="section-label">&#9989; Disponibles — elegí unidades sueltas (${stock.length})</div><div class="prod-grid">`;
@@ -525,15 +504,12 @@ function renderProds(){
   updateCart();
 }
 
-// FIX: onclick único y correcto — sin atributo duplicado
 function prodCard(p){
   const qty=sel[p.id]||0,isSel=qty>0,isAgo=p.stock==='agotado';
   const imgHtml=p.img
     ?`<div class="prod-img-wrap"><img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=prod-img-placeholder>&#127863;</div>'"><div class="agotado-badge" style="display:${isAgo?'block':'none'}">Agotado</div></div>`
     :`<div class="prod-img-placeholder" style="position:relative">&#127863;${isAgo?'<div class="agotado-badge">Agotado</div>':''}</div>`;
-
   const clickAttr = isAgo ? '' : `onclick="toggleProd('${p.id}')"`;
-
   return `<div class="prod-card${isSel?' sel':''}${isAgo?' agotado':''}" id="pc-${p.id}">
     ${imgHtml}
     <div class="prod-top" ${clickAttr} style="cursor:${isAgo?'not-allowed':'pointer'}">
@@ -575,7 +551,6 @@ function updateCart(){
   Object.keys(sel).forEach(id=>{const p=cfg.products.find(x=>x.id===id);if(p)names.push(p.name);});
   document.getElementById('cart-u').textContent=totalU;
   document.getElementById('cart-txt').innerHTML=names.length?`<span style="color:#C9A98A;font-size:11px">${names.slice(0,3).join(', ')}${names.length>3?' +más':''}</span>`:'';
-  // Feedback dorado al alcanzar mínimo
   const bar=document.getElementById('cart-bar-el');
   if(bar) bar.style.background=totalU>=6?'linear-gradient(90deg,#5D3A1A,#3B1A08)':'#3B1A08';
   document.getElementById('cart-sub').textContent='$'+sub.toLocaleString('es-AR');
@@ -644,7 +619,6 @@ function buildData(){
   const del=delSel?cfg.delivery.find(x=>x.id===delSel):null;
   const packP=pack?pack.price:0,delP=del?del.price:0;
   const totalU=(Object.values(sel).reduce((s,v)=>s+v,0))+(cajaSemanaQty*6);
-  // Prepend caja semana como item virtual si aplica
   const allProds=cajaSemanaQty>0
     ?[{id:'__caja',name:`Caja Semana — ${cfg.week.name}`,price:cajaPrecio,qty:cajaSemanaQty,cat:'semana'},...selProds]
     :selProds;
@@ -687,7 +661,7 @@ function buildConfirm(){
     `<div class="confirm-row"><span class="cr-label" style="font-size:16px;font-weight:700;color:#3B1A08">TOTAL</span><span class="cr-val" style="font-size:18px;color:#3B1A08">$${d.total.toLocaleString('es-AR')}</span></div>`;
   const lines=d.selProds.map(p=>`- ${p.qty}x ${p.name} ($${(p.price*p.qty).toLocaleString('es-AR')})`).join('\n');
   document.getElementById('wa-msg').textContent=
-    `*PEDIDO ALFAMUNDO*\n${d.semana}\n\nNombre: ${d.nombre}\nWhatsApp: ${d.tel}\n\n*Alfajores (${d.totalU} u.):*\n${lines}\n\nSubtotal: $${d.sub.toLocaleString('es-AR')}\nPackaging (${d.pack?d.pack.name:'—'}): ${d.packP>0?'+$'+d.packP.toLocaleString('es-AR'):'Incluido'}\nEnvío (${d.del?d.del.name:'—'}): ${d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR')}\n*TOTAL: $${d.total.toLocaleString('es-AR')}*\n\nFecha: ${d.fecha}`+
+    `*PEDIDO ALFACART*\n${d.semana}\n\nNombre: ${d.nombre}\nWhatsApp: ${d.tel}\n\n*Alfajores (${d.totalU} u.):*\n${lines}\n\nSubtotal: $${d.sub.toLocaleString('es-AR')}\nPackaging (${d.pack?d.pack.name:'—'}): ${d.packP>0?'+$'+d.packP.toLocaleString('es-AR'):'Incluido'}\nEnvío (${d.del?d.del.name:'—'}): ${d.delP===0?'Sin costo':'$'+d.delP.toLocaleString('es-AR')}\n*TOTAL: $${d.total.toLocaleString('es-AR')}*\n\nFecha: ${d.fecha}`+
     (d.ocas?`\nOcasión: ${d.ocas}`:'')+
     (d.alerg?`\nRestricciones: ${d.alerg}`:'')+
     (d.dir?`\nDirección: ${d.dir}`:'')+
@@ -699,9 +673,8 @@ function generarNroPedido(){
   const yy=now.getFullYear();
   const mm=String(now.getMonth()+1).padStart(2,'0');
   const dd=String(now.getDate()).padStart(2,'0');
-  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
-  // Contar pedidos del mismo día
-  const prefijo=`AM-${yy}${mm}${dd}`;
+  const ps=JSON.parse(localStorage.getItem('alfacart_pedidos')||'[]');
+  const prefijo=`AC-${yy}${mm}${dd}`;
   const delDia=ps.filter(p=>p.nro&&p.nro.startsWith(prefijo)).length;
   const seq=String(delDia+1).padStart(3,'0');
   return `${prefijo}-${seq}`;
@@ -709,7 +682,7 @@ function generarNroPedido(){
 function guardarLocal(d){
   const nro=generarNroPedido();
   const now=new Date();
-  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  const ps=JSON.parse(localStorage.getItem('alfacart_pedidos')||'[]');
   ps.unshift({
     id:Date.now(),
     nro,
@@ -723,7 +696,7 @@ function guardarLocal(d){
     estado:'p',
     detalle:`Pack: ${d.pack?d.pack.name:'—'} | Envío: ${d.del?d.del.name:'—'}`
   });
-  localStorage.setItem('alfamundo_pedidos',JSON.stringify(ps.slice(0,200)));
+  localStorage.setItem('alfacart_pedidos',JSON.stringify(ps.slice(0,200)));
   return nro;
 }
 async function enviarPedido(){
@@ -732,12 +705,8 @@ async function enviarPedido(){
   btn.textContent='Enviando...';btn.disabled=true;
   const prodStr=d.selProds.map(p=>`${p.qty>1?p.qty+'x ':''} ${p.name}`).join(' | ');
   const waText=document.getElementById('wa-msg').textContent;
-
-  // Copiar al portapapeles
   try{ await navigator.clipboard.writeText(waText); }
   catch(e){ fbCopy(waText); }
-
-  // Guardar en Sheets + notificar por email
   await Promise.all([
     postScript({action:'savePedido',pedido:{
       fecha:new Date().toLocaleDateString('es-AR'),
@@ -759,13 +728,11 @@ async function enviarPedido(){
         semana:d.semana,productos:prodStr,
         fecha_entrega:d.fecha,packaging:d.pack?d.pack.name:'—',
         envio:d.del?d.del.name:'—',
-        _subject:`Nuevo pedido AlfaMundo — ${d.nombre}`
+        _subject:`Nuevo pedido AlfaCart — ${d.nombre}`
       })
     }).catch(()=>null)
   ]);
-
   const nro=guardarLocal(d);
-  // Mostrar pantalla de éxito
   document.getElementById('s3-resumen').style.display='none';
   const exito=document.getElementById('s3-exito');
   exito.style.display='block';
@@ -782,7 +749,6 @@ function nuevoPedido(){
   document.getElementById('s3-exito').style.display='none';
   document.getElementById('s3-resumen').style.display='block';
   document.getElementById('wa-box').style.display='none';
-  // Limpiar formulario
   ['f-nombre','f-tel','f-email','f-dir','f-alerg','f-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('f-fecha').value='';
   document.getElementById('f-ocas').value='';
@@ -810,20 +776,17 @@ function renderSemana(){
   document.getElementById('semana-loading').style.display='none';
   const cont=document.getElementById('semana-content');
   cont.style.display='block';
-
   const nombresStr=cfg.week.contenido||'';
   const nombresLista=nombresStr.split(',').map(n=>n.trim()).filter(Boolean);
   const prodsDeSemanana=nombresLista.length>0
     ? nombresLista.map(nombre=>cfg.products.find(p=>p.name.toLowerCase()===nombre.toLowerCase())).filter(Boolean)
     : cfg.products.filter(p=>p.stock==='stock');
-
   let html=`<div class="week-banner">
     <div class="week-info">${cfg.week.name}</div>
     <div class="week-sub">${cfg.week.theme}</div>
     ${cfg.week.badge?`<div class="week-badge">${cfg.week.badge}</div>`:''}
     ${cfg.week.date?`<div style="color:#C9A98A;font-size:12px;margin-top:6px">&#128197; Entrega: ${cfg.week.date}</div>`:''}
   </div>`;
-
   if(prodsDeSemanana.length){
     html+=`<div class="prod-grid">`;
     html+=prodsDeSemanana.map(p=>`
@@ -867,7 +830,7 @@ function renderNosotros(){
   if(!Object.keys(qs).length){cont.innerHTML=`<div class="no-items">Sin información cargada todavía.</div>`;return;}
   const campos=Object.entries(qs);
   cont.innerHTML=`<div class="qs-card">
-    <div class="qs-titulo">${qs['Nombre del negocio']||'AlfaMundo'}</div>
+    <div class="qs-titulo">${qs['Nombre del negocio']||'AlfaCart'}</div>
     <div class="qs-subtitulo">${qs['Ubicación']||'San Fernando, Buenos Aires'}</div>
     ${campos.filter(([k])=>!['Nombre del negocio','Ubicación'].includes(k)).map(([k,v])=>`
     <div class="qs-field"><div class="qs-label">${k}</div><div class="qs-val">${v}</div></div>`).join('')}
@@ -884,15 +847,13 @@ function setFiltro(f){
   renderPedidos();
 }
 function renderPedidos(){
-  let ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  let ps=JSON.parse(localStorage.getItem('alfacart_pedidos')||'[]');
   const total=ps.length;
-  // Filtro por fecha
   const hoy=new Date().toISOString().slice(0,10);
   const semanaAtras=new Date(Date.now()-7*24*60*60*1000).toISOString().slice(0,10);
   if(filtroActivo==='hoy') ps=ps.filter(p=>p.fechaISO===hoy);
   else if(filtroActivo==='semana') ps=ps.filter(p=>p.fechaISO>=semanaAtras);
   else if(['p','c','e'].includes(filtroActivo)) ps=ps.filter(p=>(p.estado||'p')===filtroActivo);
-  // Filtro por nombre
   const busq=(document.getElementById('filtro-nombre')?.value||'').toLowerCase().trim();
   if(busq) ps=ps.filter(p=>p.nombre.toLowerCase().includes(busq));
   document.getElementById('ped-count').textContent=`${ps.length} de ${total} pedido${total!==1?'s':''}`;
@@ -900,8 +861,7 @@ function renderPedidos(){
   if(!ps.length){list.innerHTML=`<div class="no-items">&#128230; Sin pedidos para este filtro.</div>`;return;}
   const ec={p:'⏳ Pendiente',c:'✅ Confirmado',e:'📦 Entregado'};
   const cc={p:'est-p',c:'est-c',e:'est-e'};
-  // Índice real en el array completo para cambiarEstado
-  const psAll=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  const psAll=JSON.parse(localStorage.getItem('alfacart_pedidos')||'[]');
   list.innerHTML=ps.map(p=>{
     const i=psAll.findIndex(x=>x.id===p.id);
     return `<div class="pedido-card">
@@ -920,12 +880,12 @@ function renderPedidos(){
   }).join('');
 }
 function cambiarEstado(i){
-  const ps=JSON.parse(localStorage.getItem('alfamundo_pedidos')||'[]');
+  const ps=JSON.parse(localStorage.getItem('alfacart_pedidos')||'[]');
   ps[i].estado={p:'c',c:'e',e:'p'}[ps[i].estado||'p']||'c';
-  localStorage.setItem('alfamundo_pedidos',JSON.stringify(ps));renderPedidos();
+  localStorage.setItem('alfacart_pedidos',JSON.stringify(ps));renderPedidos();
 }
 function limpiarPedidos(){
-  if(confirm('¿Eliminar todos los pedidos del historial?')){localStorage.removeItem('alfamundo_pedidos');renderPedidos();}
+  if(confirm('¿Eliminar todos los pedidos del historial?')){localStorage.removeItem('alfacart_pedidos');renderPedidos();}
 }
 
 // ── TABS ───────────────────────────────────────────────
@@ -1031,9 +991,6 @@ async function saveConfig(){
   const st=document.getElementById('sync-st');
   btn.disabled=true;btn.textContent='Guardando...';
   st.style.display='block';st.textContent='⏳ Sincronizando con Google Sheets...';
-
-  // FIX: guardar valores del form sin fallback al valor anterior
-  // (así se puede borrar un campo intencionalmente)
   cfg.week={
     name:      document.getElementById('a-wname').value.trim(),
     theme:     document.getElementById('a-wtheme').value.trim(),
@@ -1043,7 +1000,6 @@ async function saveConfig(){
   };
   const wn=document.getElementById('a-wanum').value.trim();
   if(wn)localStorage.setItem('alf_wa',wn);
-
   try{
     const r=await postScript({action:'saveConfig',config:cfg});
     if(r&&r.ok){
